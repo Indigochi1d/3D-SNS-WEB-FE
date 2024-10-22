@@ -36,6 +36,7 @@ export default tseslint.config(
             ...react.configs.recommended.rules,
             ...react.configs['jsx-runtime'].rules,
             ...reactHooks.configs.recommended.rules,
+            'react/no-unknown-property' : ['off'],
             'react-refresh/only-export-components': [
                 'warn',
                 { allowConstantExport: true },
