@@ -1,0 +1,1 @@
+export const GROUND_MAPSIZE = 50;
