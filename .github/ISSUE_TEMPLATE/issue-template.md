@@ -1,9 +1,10 @@
 ---
-name: Feature request
-description: Suggest an idea for this project
+name: Issue Template
+about: 해당 이슈 생성 템플릿을 사용해서 이슈를 생성해보자.
 title: "[Feature]"
-labels: feature
-assignees: ''
+labels: ''
+assignees: Indigochi1d
+
 ---
 
 ## 🤔이슈가 필요한 이유
