@@ -59,6 +59,7 @@ None.
 | <img src="https://cdn.icon-icons.com/icons2/2415/PNG/512/react_original_wordmark_logo_icon_146375.png" alt="React" width="150" height="130"/> | <img src="https://www.recoiljs.cn/img/wordmark.png" alt="Recoil" width="150" height="130"/> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Three.js_Icon.svg/120px-Three.js_Icon.svg.png" alt="Three.js" width="150" height="130"/> |
 |------------------------------------------------------|-------------------------------------------------------|-----------------------------------------------------------|
 | <img src="https://spin.atomicobject.com/wp-content/uploads/gsap-logo-1024x512.jpg" alt="GSAP" width="150" height="130"/> | <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/socketio_logo_icon_168806.png" alt="Socket.io" width="150" height="130"/> | <img src="https://raw.githubusercontent.com/styled-components/brand/master/styled-components.png" alt="Styled-Components" width="150" height="130"/> |
+
 ✨**React**: 사용자 인터페이스를 구축하는 JavaScript 라이브러리<br/>
 ✨**Recoil**: React 상태 관리를 위한 경량 라이브러리<br/>
 ✨**Three.js**: 웹에서 3D 그래픽을 쉽게 구현할 수 있는 라이브러리<br/>
