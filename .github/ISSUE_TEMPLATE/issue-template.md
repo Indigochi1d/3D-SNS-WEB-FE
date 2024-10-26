@@ -1,7 +1,7 @@
 ---
 name: Issue Template
 about: 해당 이슈 생성 템플릿을 사용해서 이슈를 생성해보자.
-title: "[Feature]"
+title: Name your issue
 labels: ''
 assignees: Indigochi1d
 
