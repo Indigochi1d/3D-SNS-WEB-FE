@@ -1,3 +1,11 @@
+---
+name: Feature request
+description: Suggest an idea for this project
+title: "[Feature]"
+labels: feature
+assignees: ''
+---
+
 ## 🤔이슈가 필요한 이유
 -
 
