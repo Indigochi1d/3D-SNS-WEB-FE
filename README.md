@@ -1,10 +1,10 @@
-<h1 align="center">🦜3D SNS Web</h1>
-<div align="center">Updated in 2024.10.27</div>
 <div align="center">
-  <img src="https://img.shields.io/badge/-HTML-E34F26?style=flat&logo=html5&logoColor=white" alt="HTML" />
-  <img src="https://img.shields.io/badge/-CSS-1572B6?style=flat&logo=css3&logoColor=white" alt="CSS" />
-  <img src="https://img.shields.io/badge/-TypeScript-007ACC?style=flat&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/-React-61DAFB?style=flat&logo=react&logoColor=black" alt="React" />
+    <h1>🦜3D SNS Web</h1>
+    <p>Updated in 2024.10.27</p>
+    <img src="https://img.shields.io/badge/-HTML-E34F26?style=flat&logo=html5&logoColor=white" alt="HTML" />
+    <img src="https://img.shields.io/badge/-CSS-1572B6?style=flat&logo=css3&logoColor=white" alt="CSS" />
+    <img src="https://img.shields.io/badge/-TypeScript-007ACC?style=flat&logo=typescript&logoColor=white" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/-React-61DAFB?style=flat&logo=react&logoColor=black" alt="React" />
 </div>
 
 ### 🔧Features
