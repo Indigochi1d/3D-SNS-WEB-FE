@@ -2,15 +2,15 @@ import {atom} from "recoil";
 
 export const MeAtom = atom({
     key: "MeAtom",
-    default: "undefined",
+    default: undefined,
 })
 
-export const CharacterSelectedFinishedAtom = atom({
-    key: "CharacterSelectedFinishedAtom",
+export const CharacterSelectFinishedAtom = atom({
+    key: "CharacterSelectFinishedAtom",
     default: false,
 })
 
-export const selectedGLBIndexAtom = atom({
+export const SelectedGLBIndexAtom = atom({
     key: "SelectedGLBAtom",
     default: 0,
 });
