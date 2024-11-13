@@ -2,6 +2,7 @@ import {useRecoilValue} from "recoil";
 import {CharacterSelectFinishedAtom, MeAtom} from "../../store/PlayersAtom.ts";
 import MainCanvas from "./canvas/MainCanvas.tsx";
 import CanvasLayout from "./canvasLayout/Layout.tsx";
+import Lobby from "./lobby/Lobby.tsx";
 
 
 export const Content = () => {
@@ -16,5 +17,6 @@ export const Content = () => {
         )
     }
 
-    return null;
+    return <Lobby/>;
+
 }
