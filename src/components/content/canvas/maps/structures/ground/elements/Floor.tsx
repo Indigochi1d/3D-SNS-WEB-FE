@@ -3,7 +3,7 @@ import {RepeatWrapping, TextureLoader} from "three";
 import {GROUND_MAPSIZE} from "../../../../../../../data/constants.ts";
 
 const Floor = () => {
-    const sandTexture = useLoader(TextureLoader, "/sand.jpg");
+    const sandTexture = useLoader(TextureLoader, "/images/sand.jpg");
     sandTexture.wrapS = RepeatWrapping;
     sandTexture.wrapT = RepeatWrapping;
     sandTexture.repeat.x = 5;

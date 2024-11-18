@@ -120,33 +120,37 @@ const SwitchBtnWrapper = styled.div`
     gap: 15px;
 `;
 const SwitchCharacterPrevBtn = styled(Button)`
-    background-image: url("/public/buttonPrev.png");
+    background-image: url("/images/buttonPrev.png");
     background-size: contain;
     background-position: center;
     height: 60px;
     width: 60px;
-    &:hover{
+
+    &:hover {
         cursor: pointer;
     }
+
     &:active {
         transform: scale(0.90);
     }
-    
+
 `
 
 const SwitchCharacterNextBtn = styled(Button)`
-    background-image: url("/public/buttonNext.png");
+    background-image: url("/images/buttonNext.png");
     background-size: contain;
     background-position: center;
     height: 60px;
     width: 60px;
-    &:hover{
+
+    &:hover {
         cursor: pointer;
     }
+
     &:active {
         transform: scale(0.90);
     }
-    
+
 `
 
 const Lobby = () => {

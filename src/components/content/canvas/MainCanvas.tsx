@@ -3,6 +3,7 @@ import {OrbitControls} from "@react-three/drei";
 import {Player} from "./maps/player";
 import {RootMap} from "./maps/RootMap.tsx";
 
+
 const MainCanvas = () => {
     const aspectRatio: number = window.innerWidth / window.innerHeight;
     return (
