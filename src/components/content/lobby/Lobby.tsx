@@ -8,6 +8,7 @@ import {isValidText} from "../../../utils/utils.ts";
 import {GlobalFontHakgyoansimDunggeunmiso, GlobalFontSubakYang} from "../../../utils/fontSetting.ts";
 import MainCanvas from "../canvas/MainCanvas.tsx";
 
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -16,13 +17,14 @@ const Container = styled.div`
     gap: 12px;
     width: 100%;
     height: 100%;
-    background-color: #85e6ff;
+    background-color: #007355;
 `;
 
 const Title = styled.div`
     font-family: 'HakgyoansimDunggeunmisoTTF-B', sans-serif;
     font-size: 22px;
     font-weight: 800;
+    color:#cccccc;
 `;
 
 
@@ -33,7 +35,7 @@ const CharacterCanvasContainer = styled.div`
     align-items: center;
     gap: 12px;
     width: 1200px;
-    height:80%;
+    height: 80%;
 `;
 
 const CharacterTuningWrapper = styled.div`
@@ -46,7 +48,7 @@ const CharacterTuningWrapper = styled.div`
 `;
 
 const CharacterCanvasWrapper = styled.div`
-    flex:2;
+    flex: 2;
     height: 100%;
     display: flex;
     flex-direction: row;
@@ -61,38 +63,41 @@ const Input = styled.input`
     padding: 12px 10px;
     border-radius: 8px;
     width: 280px;
-    font-family: 'RixXladywatermelonR',sans-serif;
+    font-family: 'RixXladywatermelonR', sans-serif;
 `;
 
 const Button = styled.button`
     font-family: 'HakgyoansimDunggeunmisoTTF-B', sans-serif;
     padding: 10px;
-    width: 180px;
+    width: 200px;
     font-size: 18px;
     border-radius: 8px;
     border: none;
     outline: none;
     font-weight: 800;
     transition-duration: 0.2s;
-    &.valid{
+
+    &.valid {
         color: white;
         cursor: pointer;
+
         &:hover {
             color: white;
         }
     }
 
-    &.disabled{
-        background-color: #8aceff;
+    &.disabled {
+        background-color: #007355;
         color: #ededed;
         cursor: not-allowed;
     }
 `
 const NextBtn = styled(Button)`
-    &.valid{
-        background-color: #6731a1;
+    &.valid {
+        background-color: #ebb9af;
+
         &:hover {
-            background-color: #340070;
+            background-color: #efc4bb;
         }
     }
 `;
@@ -100,22 +105,59 @@ const NextBtn = styled(Button)`
 const PrevBtn = styled(Button)`
     &.valid {
         background-color: #cccccc;
+
         &:hover {
             background-color: #aaaaaa;
         }
     }
 `;
 
+const SwitchBtnWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    width: 150px;
+    gap: 15px;
+`;
+const SwitchCharacterPrevBtn = styled(Button)`
+    background-image: url("/public/buttonPrev.png");
+    background-size: contain;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+    &:hover{
+        cursor: pointer;
+    }
+    &:active {
+        transform: scale(0.90);
+    }
+    
+`
+
+const SwitchCharacterNextBtn = styled(Button)`
+    background-image: url("/public/buttonNext.png");
+    background-size: contain;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+    &:hover{
+        cursor: pointer;
+    }
+    &:active {
+        transform: scale(0.90);
+    }
+    
+`
 
 const Lobby = () => {
     const [currentStep, setCurrentStep] = useState(STEPS.NICK_NAME);
     const [tmpNickname, setTmpNickname] = useState<string | undefined>();
     const [tmpJobPosition, setTmpJobPosition] = useState<string | undefined>();
 
-    const [selectedGLBIndex,setSelectedGLBIndex] = useRecoilState(SelectedGLBIndexAtom);
-    const setCharacterSeletFinshed = useSetRecoilState(CharacterSelectFinishedAtom);
+    const [selectedGLBIndex, setSelectedGLBIndex] = useRecoilState(SelectedGLBIndexAtom);
+    const setCharacterSelectFinished = useSetRecoilState(CharacterSelectFinishedAtom);
 
-    if(!socket) return null;
+    if (!socket) return null;
     return (
         <Container>
             <GlobalFontHakgyoansimDunggeunmiso/>
@@ -124,62 +166,62 @@ const Lobby = () => {
                 <>
                     <Title>그리디에서 사용할 내 이름이에요.</Title>
                     <Input autoFocus
-                           placeholder = "별명을 입력해주세요."
+                           placeholder="별명을 입력해주세요."
                            value={tmpNickname ?? ""}
-                           onChange={(e : React.ChangeEvent<HTMLInputElement>)=>{
+                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                setTmpNickname(e.currentTarget.value);
                            }}
-                           onKeyUp={(e : React.KeyboardEvent<HTMLInputElement>)=>{
-                                if(!tmpNickname || !isValidText(tmpNickname)) return;
-                                if(e.key == "Enter"){
-                                    setCurrentStep(STEPS.JOB_POSITION);
-                                }
+                           onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                               if (!tmpNickname || !isValidText(tmpNickname)) return;
+                               if (e.key == "Enter") {
+                                   setCurrentStep(STEPS.JOB_POSITION);
+                               }
                            }}
                     />
                     <NextBtn
                         disabled={!tmpNickname || !isValidText(tmpNickname)}
                         className={isValidText(tmpNickname ?? "") ? "valid" : "disabled"}
-                        onClick={()=>{
-                            setCurrentStep((prev : number) => prev + 1);
+                        onClick={() => {
+                            setCurrentStep((prev: number) => prev + 1);
                         }}>
                         다음으로
                     </NextBtn>
                 </>
-
             )}
 
             {currentStep === STEPS.JOB_POSITION && (
-               <Container>
-                   <Title> 그리디에서 공유할 내 직군이에요.</Title>
+                <Container>
+                    <Title> 그리디에서 공유할 내 직군이에요.</Title>
                     <Input autoFocus
                            placeholder="개발 직군을 입력해주세요."
-                           onChange={(e : React.ChangeEvent<HTMLInputElement>)=>{
+                           value={tmpJobPosition ?? ""}
+                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                setTmpJobPosition(e.currentTarget.value);
                            }}
-                           onKeyUp={(e : React.KeyboardEvent<HTMLInputElement>)=>{
-                                if(!tmpJobPosition || !isValidText(tmpJobPosition)) return;
-                                if(e.key == "Enter"){
-                                    setCurrentStep((prev : number) => prev + 1);
-                                }
+                           onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                               if (!tmpJobPosition || !isValidText(tmpJobPosition)) return;
+                               if (e.key == "Enter") {
+                                   setCurrentStep((prev: number) => prev + 1);
+                               }
                            }}
                     />
-                    <PrevBtn
-                        className={isValidText(tmpNickname ?? "") ? "valid" : "disabled"}
-                        onClick={()=>{
-                            setCurrentStep((prev : number) => prev - 1);
-                        }}>
-                        이전으로
-                    </PrevBtn>
                     <NextBtn
                         disabled={!tmpJobPosition || !isValidText(tmpJobPosition)}
-                        className={isValidText(tmpNickname ?? "") ? "valid" : "disabled"}
-                        onClick={()=>{
-                            setCurrentStep((prev : number) => prev + 1);
+                        className={isValidText(tmpJobPosition ?? "") ? "valid" : "disabled"}
+                        onClick={(): void => {
+                            setCurrentStep((prev: number) => prev + 1);
                         }}
                     >
                         다음으로
                     </NextBtn>
-               </Container>
+                    <PrevBtn
+                        className={"valid"}
+                        onClick={(): void => {
+                            setCurrentStep((prev: number) => prev - 1);
+                        }}>
+                        이전으로
+                    </PrevBtn>
+                </Container>
             )}
 
             {currentStep === STEPS.CHARACTER && (
@@ -191,21 +233,55 @@ const Lobby = () => {
                                 <MainCanvas/>
                             </CharacterCanvasWrapper>
                         </CharacterTuningWrapper>
+                        <NextBtn
+                            className={(tmpNickname && tmpJobPosition) ? "valid" : "disabled"}
+                            onClick={(): void => {
+                                if (!tmpNickname || !tmpJobPosition) return;
+                                socket.emit('initialize', {
+                                    tmpNickname: tmpNickname,
+                                    tmpJobPosition: tmpJobPosition,
+                                    selectedGLBIndex: selectedGLBIndex,
+                                    myRoom: {object: []}
+                                })
+                                setCharacterSelectFinished(true);
+                            }}
+                            onKeyUp={(e): void => {
+                                if (!tmpNickname || !tmpJobPosition) return;
+                                if (e.key == "Enter") {
+                                    socket.emit('initialize', {
+                                        tmpNickname: tmpNickname,
+                                        tmpJobPosition: tmpJobPosition,
+                                        selectedGLBIndex: selectedGLBIndex,
+                                        myRoom: {object: []}
+                                    });
+                                    setCharacterSelectFinished(true);
+                                }
+                            }}
+                        >
+                            이 모습으로 진행할래요
+                        </NextBtn>
+                        <SwitchBtnWrapper>
+                            <SwitchCharacterPrevBtn
+                                onClick={()=>{
+                                    if(selectedGLBIndex === 0) return;
+                                    setSelectedGLBIndex(prev => prev-1);
+                                }}
+                            />
+                            <SwitchCharacterNextBtn
+                                onClick={()=>{
+                                    if(selectedGLBIndex === 2) return;
+                                    setSelectedGLBIndex(prev => prev+1);
+                                }}
+                            />
+                        </SwitchBtnWrapper>
+
                         <PrevBtn
-                            className={isValidText(tmpNickname ?? "") ? "valid" : "disabled"}
-                            onClick={()=>{
-                                setCurrentStep((prev : number) => prev - 1);
+                            className={"valid"}
+                            onClick={(): void => {
+                                setCurrentStep((prev: number) => prev - 1);
                             }}>
                             이전으로
                         </PrevBtn>
-                        <NextBtn
-                            className={isValidText(tmpNickname ?? "") ? "valid" : "disabled"}
-                            onClick={()=>{
-                                setCurrentStep((prev : number) => prev + 1);
-                            }}
-                        >
-                            다음으로
-                        </NextBtn>
                     </CharacterCanvasContainer>
                 </>
             )}
