@@ -59,7 +59,7 @@ export function Woman({ player, position }: ModelProps) {
 
   const playerRef = useRef<THREE.Group | null>(null);
 
-  const { scene, materials, animations } = useGLTF('/models/CubeGuyCharacter.glb') as GLTFResult;
+  const { scene, materials, animations } = useGLTF('/models/CubeWomanCharacter.glb') as GLTFResult;
 
   const clone = useMemo(() => SkeletonUtils.clone(scene) , [scene]);
 
