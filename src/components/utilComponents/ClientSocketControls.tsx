@@ -1,8 +1,22 @@
-import {useEffect} from "react";
+import {ReactNode, useEffect} from "react";
 import {socket} from "../../sockets/clientSocket.ts";
+import {useSetRecoilState} from "recoil";
+import {MeAtom} from "../../store/PlayersAtom.ts";
 
-export const ClientSocketControls = () => {
 
+interface initializeProps{
+    id:string,
+    position: [number,number,number],
+    nickname: string,
+    jobPosition: string,
+    selectedGLBIndex: number,
+    myRoom: {
+        objects:[]
+    }
+}
+
+export const ClientSocketControls = (): ReactNode => {
+    const setMe = useSetRecoilState(MeAtom);
     const handleConnect = () : void => {
         console.log('ClientSocketControls Connected');
     };
@@ -11,7 +25,9 @@ export const ClientSocketControls = () => {
         console.log('ClientSocketControls Disconnected');
     };
 
-    const handleInitialize = (): void => {
+    const handleInitialize = (value:initializeProps): void => {
+        console.log(value);
+        setMe(value);
         console.log('ClientSocketControls Initialized');
     };
 
@@ -52,6 +68,6 @@ export const ClientSocketControls = () => {
             socket.off("newText", handleNewText);
         };
     }, []);
-
+    return <></>
 };
 

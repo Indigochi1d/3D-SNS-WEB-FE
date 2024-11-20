@@ -34,7 +34,7 @@ const CharacterCanvasContainer = styled.div`
     justify-content: center;
     align-items: center;
     gap: 12px;
-    width: 1200px;
+    width: 1000px;
     height: 80%;
 `;
 
