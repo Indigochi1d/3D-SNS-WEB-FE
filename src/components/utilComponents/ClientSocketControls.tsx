@@ -1,8 +1,10 @@
 import {useEffect} from "react";
 import {socket} from "../../sockets/clientSocket.ts";
+import {useRecoilState} from "recoil";
+import {MeAtom} from "../../store/PlayersAtom.ts";
 
 export const ClientSocketControls = () => {
-
+    const [me,setMe] = useRecoilState(MeAtom);
     const handleConnect = () : void => {
         console.log('ClientSocketControls Connected');
     };
@@ -12,6 +14,7 @@ export const ClientSocketControls = () => {
     };
 
     const handleInitialize = (): void => {
+
         console.log('ClientSocketControls Initialized');
     };
 
