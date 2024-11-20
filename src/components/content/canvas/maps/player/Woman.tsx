@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.5.3 public/models/CubeGuyCharacter.glb -o src/components/
 */
 
 import * as THREE from 'three'
-import React, {useEffect, useMemo, useRef, useState} from 'react'
+import {useEffect, useMemo, useRef, useState} from 'react'
 import { useGraph } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { GLTF, SkeletonUtils } from 'three-stdlib'
