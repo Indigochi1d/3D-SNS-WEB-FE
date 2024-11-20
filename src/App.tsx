@@ -10,8 +10,6 @@ function App() {
           <ClientSocketControls />
         <Content/>
       </RecoilRoot>
-
-
   )
 }
 
