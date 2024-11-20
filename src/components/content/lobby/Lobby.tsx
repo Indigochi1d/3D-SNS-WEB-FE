@@ -100,6 +100,9 @@ const NextBtn = styled(Button)`
             background-color: #efc4bb;
         }
     }
+    &:active {
+        transform: scale(0.90);
+    }
 `;
 
 const PrevBtn = styled(Button)`
@@ -110,43 +113,26 @@ const PrevBtn = styled(Button)`
             background-color: #aaaaaa;
         }
     }
+    &:active {
+        transform: scale(0.90);
+    }
 `;
 
 const SwitchBtnWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    height: 70px;
-    width: 150px;
+    height: 50px;
+    width: 200px;
     gap: 15px;
 `;
-const SwitchCharacterPrevBtn = styled(Button)`
-    background-image: url("/images/buttonPrev.png");
-    background-size: contain;
-    background-position: center;
-    height: 60px;
-    width: 60px;
-
-    &:hover {
-        cursor: pointer;
-    }
-
-    &:active {
-        transform: scale(0.90);
-    }
-
-`
 
 const SwitchCharacterNextBtn = styled(Button)`
-    background-image: url("/images/buttonNext.png");
-    background-size: contain;
-    background-position: center;
-    height: 60px;
-    width: 60px;
+    height: inherit;
+    width: inherit;
 
     &:hover {
         cursor: pointer;
     }
-
     &:active {
         transform: scale(0.90);
     }
@@ -265,18 +251,18 @@ const Lobby = () => {
                             이 모습으로 진행할래요
                         </NextBtn>
                         <SwitchBtnWrapper>
-                            <SwitchCharacterPrevBtn
-                                onClick={()=>{
-                                    if(selectedGLBIndex === 0) return;
-                                    setSelectedGLBIndex(prev => prev-1);
-                                }}
-                            />
+
                             <SwitchCharacterNextBtn
                                 onClick={()=>{
-                                    if(selectedGLBIndex === 2) return;
-                                    setSelectedGLBIndex(prev => prev+1);
+                                    setSelectedGLBIndex((prev:number)=>{
+                                        if(prev === undefined) return 1;
+                                        if(prev === 2) return 0;
+                                        return prev + 1;
+                                    })
                                 }}
-                            />
+                            >
+                                다른 캐릭터도 볼래요
+                            </SwitchCharacterNextBtn>
                         </SwitchBtnWrapper>
 
                         <PrevBtn
