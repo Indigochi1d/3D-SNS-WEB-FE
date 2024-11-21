@@ -10,6 +10,14 @@ interface meProps{
     }
 }
 
+interface PlayerProps {
+    id: string;
+    position: [number, number, number];
+    nickname: string;
+    jobPosition: string;
+    selectedGLBIndex: number;
+}
+
 export const MeAtom = atom<meProps|undefined>({
     key: "MeAtom",
     default: undefined,
@@ -24,3 +32,8 @@ export const SelectedGLBIndexAtom = atom({
     key: "SelectedGLBAtom",
     default: 0,
 });
+
+export const PlayersAtom = atom<PlayerProps[]>({
+    key: "PlayersAtom",
+    default: [],
+})
