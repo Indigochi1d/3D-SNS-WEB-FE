@@ -32,11 +32,12 @@ interface GLTFAction extends THREE.AnimationClip {
 
 type GLTFResult = GLTF & {
     nodes: {
-        Character: THREE.SkinnedMesh
+        Character: THREE.SkinnedMesh,
         Root: THREE.Bone
     }
     materials: {
-        Atlas: THREE.MeshStandardMaterial
+        Atlas: THREE.MeshStandardMaterial,
+        "Atlas.001"?: THREE.MeshStandardMaterial
     }
     animations: GLTFAction[]
 }

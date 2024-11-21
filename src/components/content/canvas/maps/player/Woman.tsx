@@ -35,7 +35,7 @@ export function Woman({ player, position,modelIndex }: ModelProps) {
             <skinnedMesh
                 name="Character"
                 geometry={nodes.Character.geometry}
-                material={materials['Atlas.001']}
+                material={materials["Atlas.001"]}
                 skeleton={nodes.Character.skeleton}
                 rotation={[-Math.PI / 2, 0, 0]}
                 scale={100}
@@ -47,4 +47,4 @@ export function Woman({ player, position,modelIndex }: ModelProps) {
 }
 
 
-useGLTF.preload('/CubeGuyCharacter.glb')
+useGLTF.preload('/CubeWomanCharacter.glb')

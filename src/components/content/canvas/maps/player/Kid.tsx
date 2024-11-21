@@ -45,4 +45,4 @@ export function Kid({ player, position,modelIndex }: ModelProps) {
 }
 
 
-useGLTF.preload('/CubeGuyCharacter.glb')
+useGLTF.preload('/Steve.glb')
