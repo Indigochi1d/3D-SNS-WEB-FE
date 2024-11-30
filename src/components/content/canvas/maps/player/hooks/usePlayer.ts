@@ -1,9 +1,11 @@
 import {useEffect, useMemo, useRef, useState} from "react";
 import * as THREE from "three";
 import {useAnimations, useGLTF} from "@react-three/drei";
-import {GLTF, SkeletonUtils} from "three-stdlib";
-import {useGraph} from "@react-three/fiber";
+import {GLTF, SkeletonUtils, ThreeMFLoader} from "three-stdlib";
+import {useGraph,useFrame, RootState} from "@react-three/fiber";
 import {Vector3} from "three";
+import { useRecoilValue } from "recoil";
+import { MeAtom } from "../../../../../../store/PlayersAtom";
 
 type ActionName =
     | 'CharacterArmature|CharacterArmature|CharacterArmature|Death'
@@ -51,6 +53,7 @@ interface ModelProps {
 }
 export const usePlayer = ({ player, position,modelIndex }: ModelProps) => {
     const playerId = player?.id ?? ''; // player가 undefined일 수 있으므로 조건부 접근 사용
+    const me = useRecoilValue(MeAtom);
 
     const memoizedPosition = useMemo(() => position, []);
 
@@ -81,6 +84,7 @@ export const usePlayer = ({ player, position,modelIndex }: ModelProps) => {
     );
 
     const { actions } = useAnimations(animations, playerRef);
+    
 
     useEffect(() => {
         actions[animation]?.reset().fadeIn(0.5).play();
@@ -88,6 +92,29 @@ export const usePlayer = ({ player, position,modelIndex }: ModelProps) => {
             actions[animation]?.fadeOut(0.5);
         };
     }, [actions, animation]);
+
+
+    useFrame(({camera}:RootState)=>{
+        if(!player) return;
+        if(!playerRef.current) return;
+        if(playerRef.current.position.distanceTo(position) > 0.1){
+            const direction = playerRef.current.position.clone().sub(position).normalize().multiplyScalar(0.04);
+            playerRef.current.position.sub(direction);
+            playerRef.current.lookAt(position);
+            setAnimation("CharacterArmature|CharacterArmature|CharacterArmature|Run");
+        }
+        else{
+            setAnimation("CharacterArmature|CharacterArmature|CharacterArmature|Idle");
+        }
+        if(me?.id === player.id&&camera){
+            camera.position.set(
+                playerRef.current.position.x+12,
+                playerRef.current.position.y+12,
+                playerRef.current.position.z+12,
+            )
+            camera.lookAt(playerRef.current.position);
+        }
+    });
 
     return {playerRef,memoizedPosition,playerId,nodes,materials};
 }
