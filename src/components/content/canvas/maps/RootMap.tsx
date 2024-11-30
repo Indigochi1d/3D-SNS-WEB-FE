@@ -46,7 +46,7 @@ export const RootMap = () => {
                                             modelIndex={0}
                                         />
                                     )}
-                                    {player.selectedGLBIndex === 0 && (
+                                    {player.selectedGLBIndex === 1 && (
                                         <Kid
                                             player={player}
                                             position={new Vector3(
@@ -57,7 +57,7 @@ export const RootMap = () => {
                                             modelIndex={1}
                                         />
                                     )}
-                                    {player.selectedGLBIndex === 0 && (
+                                    {player.selectedGLBIndex === 2 && (
                                         <Woman
                                             player={player}
                                             position={new Vector3(
