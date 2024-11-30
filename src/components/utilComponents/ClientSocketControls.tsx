@@ -1,6 +1,6 @@
 import {ReactNode, useEffect} from "react";
 import {socket} from "../../sockets/clientSocket.ts";
-import {useRecoilState} from "recoil";
+import {useRecoilState,useSetRecoilState} from "recoil";
 import {MeAtom, PlayersAtom} from "../../store/PlayersAtom.ts";
 
 
@@ -26,7 +26,7 @@ interface PlayerProps {
 
 export const ClientSocketControls = (): ReactNode => {
     const [me,setMe] = useRecoilState(MeAtom);
-    const [players,setPlayers] = useRecoilState(PlayersAtom);
+    const setPlayers = useSetRecoilState(PlayersAtom);
     const handleConnect = () : void => {
         console.log('ClientSocketControls Connected');
     };
