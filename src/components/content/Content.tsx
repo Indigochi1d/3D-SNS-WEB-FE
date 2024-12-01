@@ -7,7 +7,7 @@ import Lobby from "./lobby/Lobby.tsx";
 
 export const Content = () => {
     const characterSelectFinished: boolean = useRecoilValue(CharacterSelectFinishedAtom);
-    const me: undefined = useRecoilValue(MeAtom);
+    const me = useRecoilValue(MeAtom);
 
     if (characterSelectFinished && me) {
         return (

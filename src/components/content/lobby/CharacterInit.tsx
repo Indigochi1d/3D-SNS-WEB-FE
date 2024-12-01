@@ -21,9 +21,9 @@ export const CharacterInit = () => {
     },[camera.position]);
     return (
         <>
-            {selectedCharacterGLBIndex === 0 && <Man player={undefined} position={new Vector3(0,0,0)}/>}
-            {selectedCharacterGLBIndex === 1 && <Kid player={undefined} position={new Vector3(0,0,0)}/>}
-            {selectedCharacterGLBIndex === 2 && <Woman player={undefined} position={new Vector3(0,0,0)}/>}
+            {selectedCharacterGLBIndex === 0 && <Man player={undefined} position={new Vector3(0,0,0)} modelIndex={0}/>}
+            {selectedCharacterGLBIndex === 1 && <Kid player={undefined} position={new Vector3(0,0,0)} modelIndex={1}/>}
+            {selectedCharacterGLBIndex === 2 && <Woman player={undefined} position={new Vector3(0,0,0)} modelIndex={2}/>}
             <OrbitControls
                 ref={controls}
                 minDistance={1}

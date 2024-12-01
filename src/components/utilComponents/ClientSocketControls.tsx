@@ -1,7 +1,7 @@
 import {ReactNode, useEffect} from "react";
 import {socket} from "../../sockets/clientSocket.ts";
-import {useSetRecoilState} from "recoil";
-import {MeAtom} from "../../store/PlayersAtom.ts";
+import {useRecoilState,useSetRecoilState} from "recoil";
+import {MeAtom, PlayersAtom} from "../../store/PlayersAtom.ts";
 
 
 interface initializeProps{
@@ -15,8 +15,18 @@ interface initializeProps{
     }
 }
 
+interface PlayerProps {
+    id: string;
+    position: [number, number, number];
+    nickname: string;
+    jobPosition: string;
+    selectedGLBIndex: number;
+    
+}
+
 export const ClientSocketControls = (): ReactNode => {
-    const setMe = useSetRecoilState(MeAtom);
+    const [me,setMe] = useRecoilState(MeAtom);
+    const setPlayers = useSetRecoilState(PlayersAtom);
     const handleConnect = () : void => {
         console.log('ClientSocketControls Connected');
     };
@@ -39,7 +49,16 @@ export const ClientSocketControls = (): ReactNode => {
         console.log('ClientSocketControls Exit');
     };
 
-    const handlePlayers = (): void => {
+    const handlePlayers = (value :PlayerProps[]): void => {
+        setPlayers(value);
+        const newMe = value.find((p:PlayerProps) => p && me && p.id === me.id);
+        
+        if (newMe) {
+            setMe({
+                ...newMe,
+                myRoom: { objects: [] },
+            });
+        }
         console.log('ClientSocketControls Players');
     };
 

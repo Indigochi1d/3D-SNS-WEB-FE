@@ -1,4 +1,5 @@
 import {atom} from "recoil";
+
 interface meProps{
     id:string,
     position: [number,number,number],
@@ -8,6 +9,14 @@ interface meProps{
     myRoom: {
         objects:[]
     }
+}
+
+interface PlayerProps {
+    id: string;
+    position: [number, number, number];
+    nickname: string;
+    jobPosition: string;
+    selectedGLBIndex: number;
 }
 
 export const MeAtom = atom<meProps|undefined>({
@@ -24,3 +33,8 @@ export const SelectedGLBIndexAtom = atom({
     key: "SelectedGLBAtom",
     default: 0,
 });
+
+export const PlayersAtom = atom<PlayerProps[]>({
+    key: "PlayersAtom",
+    default: [],
+})
