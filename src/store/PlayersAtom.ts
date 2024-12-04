@@ -37,4 +37,7 @@ export const SelectedGLBIndexAtom = atom({
 export const PlayersAtom = atom<PlayerProps[]>({
     key: "PlayersAtom",
     default: [],
-})
+});
+
+
+
