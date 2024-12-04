@@ -7,7 +7,7 @@ function App() {
 
   return (
       <RecoilRoot>
-          <ClientSocketControls />
+        <ClientSocketControls />
         <Content/>
       </RecoilRoot>
   )
