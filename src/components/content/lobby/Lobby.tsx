@@ -148,6 +148,7 @@ const Lobby = () => {
     const setCharacterSelectFinished = useSetRecoilState(CharacterSelectFinishedAtom);
 
     if (!socket) return null;
+
     return (
         <Container>
             <GlobalFontHakgyoansimDunggeunmiso/>
