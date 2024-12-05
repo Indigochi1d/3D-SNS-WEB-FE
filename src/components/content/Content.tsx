@@ -4,7 +4,7 @@ import MainCanvas from "./canvas/MainCanvas.tsx";
 import CanvasLayout from "./canvasLayout/Layout.tsx";
 import Lobby from "./lobby/Lobby.tsx";
 import {SocketStatusAtom} from "../../store/SocketAtom.ts";
-import Error from "../utilComponents/ErrorComponent/Error.tsx";
+import ServerOffline from "../utilComponents/ErrorComponent/ServerOffline.tsx";
 
 export const Content = () => {
     const characterSelectFinished: boolean = useRecoilValue(CharacterSelectFinishedAtom);
@@ -20,7 +20,7 @@ export const Content = () => {
     }
     if(!socketStatus.isConnected){
         return(
-            <Error/>
+            <ServerOffline/>
         )
     }
     
