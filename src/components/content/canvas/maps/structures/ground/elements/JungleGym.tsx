@@ -1,7 +1,6 @@
 import { useGLTF } from "@react-three/drei";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import {Object3D, Vector3} from "three";
-import {useEffect} from "react";
 
 const name = 'ground-jungleGym';
 const scale = 0.8;
