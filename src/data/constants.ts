@@ -1,4 +1,4 @@
-export const GROUND_MAPSIZE = 50;
+export const GROUND_MAPSIZE = 100;
 
 export const STEPS = {
     NICK_NAME: 0,
