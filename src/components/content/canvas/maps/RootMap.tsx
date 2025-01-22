@@ -24,6 +24,8 @@ export const RootMap = () => {
         controls.current.target.set(0, 0, 0);
     }, [camera.position])
 
+    const nicknameRef = useRef(null);
+
     return (
         <>
             {!characterSelectFinished ?
@@ -44,6 +46,7 @@ export const RootMap = () => {
                                                     player.position[2]
                                                 )}
                                             modelIndex={0}
+                                            nicknameRef={nicknameRef}
                                         />
                                     )}
                                     {player.selectedGLBIndex === 1 && (

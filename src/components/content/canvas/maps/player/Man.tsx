@@ -9,6 +9,7 @@ interface ModelProps{
         id: string;
         selectedGLBIndex:number
         nickname:string
+        jobPosition:string
     } | undefined;
     nicknameRef: RefObject<Group>;
     position: Vector3;
@@ -25,7 +26,7 @@ export function Man({player, position, modelIndex}:ModelProps) {
     return (
         <>
             {me && (
-                <NickNameBoard ref={nicknameRef} text={`${player?.nickname}`} isNpc={false}/>
+                <NickNameBoard ref={nicknameRef} text={`${player?.nickname}[${player?.jobPosition}]`} isNpc={false}/>
             )}
             <group ref={playerRef} position={memoizedPosition} name={playerId} dispose={null}>
             <group name="Root_Scene">
