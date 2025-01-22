@@ -37,6 +37,8 @@ export function Kid({ player, position,modelIndex }: ModelProps) {
                 skeleton={nodes.Character.skeleton}
                 rotation={[-Math.PI / 2, 0, 0]}
                 scale={100}
+                receiveShadow
+                castShadow
             />
           </group>
         </group>
