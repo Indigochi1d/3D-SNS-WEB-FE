@@ -1,5 +1,6 @@
 import Floor from "./elements/Floor.tsx";
 import JungleGym from "./elements/JungleGym.tsx";
+import Penguin from "./elements/npc/Penguin.tsx";
 import PineTrees from "./elements/PineTrees.tsx";
 import Swing from "./elements/Swing.tsx";
 import Tree from "./elements/Tree.tsx";
@@ -9,6 +10,7 @@ export const GroundElements = () => {
         <>
             <Floor />
             <JungleGym/>
+            <Penguin/>
 
             <PineTrees position={[-30,0,-30]} />
             <PineTrees position={[-20,0,-30]} />
