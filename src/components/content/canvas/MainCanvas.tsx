@@ -23,7 +23,7 @@ const MainCanvas = () => {
                 castShadow
                 intensity={5}
                 position={[0, 50, -50]}
-                shadow-normalBias={[0, 1]}
+                shadow-normalBias={0.1}
                 shadow-camera-left={-25}
                 shadow-camera-right={25}
                 shadow-camera-top={25}
@@ -32,7 +32,6 @@ const MainCanvas = () => {
                 shadow-camera-far={200}
             />
             <OrbitControls/>
-
             <RootMap/>
         </Canvas>
     );
