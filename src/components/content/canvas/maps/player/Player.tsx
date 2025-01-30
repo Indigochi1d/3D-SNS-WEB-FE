@@ -11,17 +11,17 @@ interface ModelProps{
         nickname:string
         jobPosition:string
     } | undefined;
-    nicknameRef: RefObject<Group>;
+    nicknameRef?: RefObject<Group>;
     position: Vector3;
     modelIndex:number;
 }
-export function Player({player, position, modelIndex}:ModelProps) {
-    const modelNumber :number = modelIndex ?? player?.selectedGLBIndex;
+export function Player({player, position, modelIndex:mIdx}:ModelProps) {
+    const modelIndex :number = mIdx ?? player?.selectedGLBIndex;
     const {me,playerRef,nicknameRef, memoizedPosition, playerId, nodes, materials} = usePlayer(
         {
             player,
             position,
-            modelIndex: modelNumber
+            modelIndex
         }
     )
     return (
@@ -38,7 +38,7 @@ export function Player({player, position, modelIndex}:ModelProps) {
                     <skinnedMesh
                         name="Character"
                         geometry={nodes.Character.geometry}
-                        material={modelNumber === 1 ? materials["Atlas.001"] : materials.Atlas}
+                        material={modelIndex === 1 ? materials["Atlas.001"] : materials.Atlas}
                         skeleton={nodes.Character.skeleton}
                         rotation={[-Math.PI / 2, 0, 0]}
                         scale={100}
@@ -53,4 +53,4 @@ export function Player({player, position, modelIndex}:ModelProps) {
     );
 }
 
-useGLTF.preload('/CubeGuyCharacter.glb')
+useGLTF.preload('/CubeGuyCharacter.glb');

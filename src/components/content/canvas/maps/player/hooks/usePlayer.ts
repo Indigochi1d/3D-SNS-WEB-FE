@@ -76,6 +76,7 @@ export const usePlayer = ({ player, position,modelIndex }: ModelProps) => {
             })()
     ) as GLTFResult;
 
+
     const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
 
     const objectMap = useGraph(clone) as GLTFResult;
@@ -126,6 +127,5 @@ export const usePlayer = ({ player, position,modelIndex }: ModelProps) => {
             camera.lookAt(playerRef.current.position);
         }
     });
-
     return {me,playerRef,nicknameRef,memoizedPosition,playerId,nodes,materials};
 }

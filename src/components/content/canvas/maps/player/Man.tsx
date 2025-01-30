@@ -11,7 +11,7 @@ interface ModelProps{
         nickname:string
         jobPosition:string
     } | undefined;
-    nicknameRef: RefObject<Group>;
+    nicknameRef?: RefObject<Group>;
     position: Vector3;
     modelIndex:number;
 }

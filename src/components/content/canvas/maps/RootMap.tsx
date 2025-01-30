@@ -8,7 +8,9 @@ import {useThree} from "@react-three/fiber";
 import {MutableRefObject, useEffect, useRef} from "react";
 import {OrbitControls as typeOC} from "three-stdlib";
 import {Vector3} from "three";
-import { Player } from "./player/Player.tsx";
+import {Man} from "../maps/player/Man.tsx";
+import {Woman} from "../maps/player/Woman.tsx";
+import {Kid} from "../maps/player/Kid.tsx";
 
 
 export const RootMap = () => {
@@ -16,14 +18,14 @@ export const RootMap = () => {
     const camera = useThree(three => three.camera);
     const [players] = useRecoilState(PlayersAtom);
     const controls: MutableRefObject<typeOC | null> = useRef(null);
+    const nicknameRef = useRef(null);
     useEffect(() => {
         if (!controls.current) return;
         camera.position.set(14, 14, 14)
         controls.current.target.set(0, 0, 0);
     }, [camera.position])
 
-    const nicknameRef = useRef(null);
-
+    
     return (
         <>
             {!characterSelectFinished ?
@@ -32,16 +34,46 @@ export const RootMap = () => {
                     <>
                         <GroundElements/>
                         {players.map((player) => {
-                           return(
-                            <Player
-                                key={player.id}
-                                player={player}
-                                position={new Vector3(player.position[0],player.position[1],player.position[2])}
-                                modelIndex={player.selectedGLBIndex}
-                                nicknameRef={nicknameRef}
-                                />
-
-                           )
+                            return (
+                                <>
+                                    {player.selectedGLBIndex === 0 && (
+                                        <Man
+                                            player={player}
+                                            position={
+                                                new Vector3(
+                                                    player.position[0],
+                                                    player.position[1],
+                                                    player.position[2]
+                                                )}
+                                            modelIndex={0}
+                                            nicknameRef={nicknameRef}
+                                        />
+                                    )}
+                                    {player.selectedGLBIndex === 1 && (
+                                        <Kid
+                                            player={player}
+                                            position={new Vector3(
+                                                player.position[0],
+                                                player.position[1],
+                                                player.position[2]
+                                            )}
+                                            modelIndex={1}
+                                            
+                                        />
+                                    )}
+                                    {player.selectedGLBIndex === 2 && (
+                                        <Woman
+                                            player={player}
+                                            position={new Vector3(
+                                                player.position[0],
+                                                player.position[1],
+                                                player.position[2]
+                                            )}
+                                            modelIndex={2}
+                                        />
+                                    )}
+                                </>
+                            )
                         })}
                     </>
                 )
