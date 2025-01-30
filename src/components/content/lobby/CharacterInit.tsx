@@ -14,6 +14,8 @@ export const CharacterInit = () => {
     const selectedCharacterGLBIndex : number = useRecoilValue(SelectedGLBIndexAtom);
 
     const controls:MutableRefObject<typeOC | null> = useRef(null);
+    const nicknameRef = useRef(null);
+
     useEffect(() => {
         if(!controls.current?.target) return;
         camera.position.set(8,8,8);
@@ -21,7 +23,7 @@ export const CharacterInit = () => {
     },[camera.position]);
     return (
         <>
-            {selectedCharacterGLBIndex === 0 && <Man player={undefined} position={new Vector3(0,0,0)} modelIndex={0}/>}
+            {selectedCharacterGLBIndex === 0 && <Man player={undefined} position={new Vector3(0,0,0)} modelIndex={0} nicknameRef={nicknameRef}/>}
             {selectedCharacterGLBIndex === 1 && <Kid player={undefined} position={new Vector3(0,0,0)} modelIndex={1}/>}
             {selectedCharacterGLBIndex === 2 && <Woman player={undefined} position={new Vector3(0,0,0)} modelIndex={2}/>}
             <OrbitControls

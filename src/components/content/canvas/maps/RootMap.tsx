@@ -7,10 +7,10 @@ import {CharacterInit} from "../../lobby/CharacterInit.tsx";
 import {useThree} from "@react-three/fiber";
 import {MutableRefObject, useEffect, useRef} from "react";
 import {OrbitControls as typeOC} from "three-stdlib";
-import {Man} from "./player/Man.tsx";
-import {Woman} from "./player/Woman.tsx";
-import {Kid} from "./player/Kid.tsx";
 import {Vector3} from "three";
+import {Man} from "../maps/player/Man.tsx";
+import {Woman} from "../maps/player/Woman.tsx";
+import {Kid} from "../maps/player/Kid.tsx";
 
 
 export const RootMap = () => {
@@ -18,12 +18,14 @@ export const RootMap = () => {
     const camera = useThree(three => three.camera);
     const [players] = useRecoilState(PlayersAtom);
     const controls: MutableRefObject<typeOC | null> = useRef(null);
+    const nicknameRef = useRef(null);
     useEffect(() => {
         if (!controls.current) return;
         camera.position.set(14, 14, 14)
         controls.current.target.set(0, 0, 0);
     }, [camera.position])
 
+    
     return (
         <>
             {!characterSelectFinished ?
@@ -44,6 +46,7 @@ export const RootMap = () => {
                                                     player.position[2]
                                                 )}
                                             modelIndex={0}
+                                            nicknameRef={nicknameRef}
                                         />
                                     )}
                                     {player.selectedGLBIndex === 1 && (
@@ -55,6 +58,7 @@ export const RootMap = () => {
                                                 player.position[2]
                                             )}
                                             modelIndex={1}
+                                            
                                         />
                                     )}
                                     {player.selectedGLBIndex === 2 && (

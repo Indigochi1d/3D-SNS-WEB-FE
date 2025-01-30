@@ -15,12 +15,13 @@ interface ModelProps{
     position: Vector3;
     modelIndex:number;
 }
-export function Man({player, position, modelIndex}:ModelProps) {
+export function Player({player, position, modelIndex:mIdx}:ModelProps) {
+    const modelIndex :number = mIdx ?? player?.selectedGLBIndex;
     const {me,playerRef,nicknameRef, memoizedPosition, playerId, nodes, materials} = usePlayer(
         {
             player,
             position,
-            modelIndex: modelIndex ?? player?.selectedGLBIndex
+            modelIndex
         }
     )
     return (
@@ -37,7 +38,7 @@ export function Man({player, position, modelIndex}:ModelProps) {
                     <skinnedMesh
                         name="Character"
                         geometry={nodes.Character.geometry}
-                        material={materials.Atlas}
+                        material={modelIndex === 1 ? materials["Atlas.001"] : materials.Atlas}
                         skeleton={nodes.Character.skeleton}
                         rotation={[-Math.PI / 2, 0, 0]}
                         scale={100}
@@ -52,4 +53,4 @@ export function Man({player, position, modelIndex}:ModelProps) {
     );
 }
 
-useGLTF.preload('/CubeGuyCharacter.glb')
+useGLTF.preload('/CubeGuyCharacter.glb');

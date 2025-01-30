@@ -1,7 +1,7 @@
-import {useEffect, useMemo, useRef, useState} from "react";
+import {MutableRefObject, useEffect, useMemo, useRef, useState} from "react";
 import * as THREE from "three";
 import {useAnimations, useGLTF} from "@react-three/drei";
-import {GLTF, SkeletonUtils, ThreeMFLoader} from "three-stdlib";
+import {GLTF, SkeletonUtils} from "three-stdlib";
 import {useGraph,useFrame, RootState} from "@react-three/fiber";
 import {Vector3} from "three";
 import { useRecoilValue } from "recoil";
@@ -51,13 +51,15 @@ interface ModelProps {
     position: Vector3;
     modelIndex:number;
 }
+
 export const usePlayer = ({ player, position,modelIndex }: ModelProps) => {
     const playerId = player?.id ?? ''; // player가 undefined일 수 있으므로 조건부 접근 사용
     const me = useRecoilValue(MeAtom);
 
     const memoizedPosition = useMemo(() => position, []);
 
-    const playerRef = useRef<THREE.Group | null>(null);
+    const playerRef:MutableRefObject<THREE.Group|null> = useRef<THREE.Group | null>(null);
+    const nicknameRef:MutableRefObject<THREE.Group|null> = useRef(null);
 
     const { scene, materials, animations } = useGLTF(
         (()=>{
@@ -73,6 +75,7 @@ export const usePlayer = ({ player, position,modelIndex }: ModelProps) => {
                 }
             })()
     ) as GLTFResult;
+
 
     const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
 
@@ -106,6 +109,15 @@ export const usePlayer = ({ player, position,modelIndex }: ModelProps) => {
         else{
             setAnimation("CharacterArmature|CharacterArmature|CharacterArmature|Idle");
         }
+
+        if(nicknameRef.current){
+            nicknameRef.current.position.set(
+                playerRef.current.position.x,
+                playerRef.current.position.y+3,
+                playerRef.current.position.z,
+            );
+            nicknameRef.current.lookAt(10000,10000,10000);
+        }
         if(me?.id === player.id&&camera){
             camera.position.set(
                 playerRef.current.position.x+12,
@@ -115,6 +127,5 @@ export const usePlayer = ({ player, position,modelIndex }: ModelProps) => {
             camera.lookAt(playerRef.current.position);
         }
     });
-
-    return {playerRef,memoizedPosition,playerId,nodes,materials};
+    return {me,playerRef,nicknameRef,memoizedPosition,playerId,nodes,materials};
 }
