@@ -15,14 +15,17 @@ const Penguin :React.FC = () => {
         })
     }, [position,scene]);
     return (
-        <primitive
-            visible
-            name={name}
-            scale={3}
-            position={position}
-            object={scene}
-            rotation={[0,Math.PI*3/2,0]}
-        />
+        <>
+            <primitive
+                visible
+                name={name}
+                scale={3}
+                position={position}
+                object={scene}
+                rotation={[0,Math.PI*3/2,0]}
+            />
+        </>
+        
             
     );
 };

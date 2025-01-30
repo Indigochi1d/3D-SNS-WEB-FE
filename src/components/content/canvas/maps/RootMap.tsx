@@ -7,10 +7,8 @@ import {CharacterInit} from "../../lobby/CharacterInit.tsx";
 import {useThree} from "@react-three/fiber";
 import {MutableRefObject, useEffect, useRef} from "react";
 import {OrbitControls as typeOC} from "three-stdlib";
-import {Man} from "./player/Man.tsx";
-import {Woman} from "./player/Woman.tsx";
-import {Kid} from "./player/Kid.tsx";
 import {Vector3} from "three";
+import { Player } from "./player/Player.tsx";
 
 
 export const RootMap = () => {
@@ -34,45 +32,16 @@ export const RootMap = () => {
                     <>
                         <GroundElements/>
                         {players.map((player) => {
-                            return (
-                                <>
-                                    {player.selectedGLBIndex === 0 && (
-                                        <Man
-                                            player={player}
-                                            position={
-                                                new Vector3(
-                                                    player.position[0],
-                                                    player.position[1],
-                                                    player.position[2]
-                                                )}
-                                            modelIndex={0}
-                                            nicknameRef={nicknameRef}
-                                        />
-                                    )}
-                                    {player.selectedGLBIndex === 1 && (
-                                        <Kid
-                                            player={player}
-                                            position={new Vector3(
-                                                player.position[0],
-                                                player.position[1],
-                                                player.position[2]
-                                            )}
-                                            modelIndex={1}
-                                        />
-                                    )}
-                                    {player.selectedGLBIndex === 2 && (
-                                        <Woman
-                                            player={player}
-                                            position={new Vector3(
-                                                player.position[0],
-                                                player.position[1],
-                                                player.position[2]
-                                            )}
-                                            modelIndex={2}
-                                        />
-                                    )}
-                                </>
-                            )
+                           return(
+                            <Player
+                                key={player.id}
+                                player={player}
+                                position={new Vector3(player.position[0],player.position[1],player.position[2])}
+                                modelIndex={player.selectedGLBIndex}
+                                nicknameRef={nicknameRef}
+                                />
+
+                           )
                         })}
                     </>
                 )
