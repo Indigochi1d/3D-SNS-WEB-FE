@@ -7,7 +7,8 @@ import styled from "styled-components";
 import {isValidText} from "../../../utils/utils.ts";
 import {GlobalFontHakgyoansimDunggeunmiso, GlobalFontSubakYang} from "../../../utils/fontSetting.ts";
 import MainCanvas from "../canvas/MainCanvas.tsx";
-
+import {SKILLS} from "../../../data/constants.ts";
+ 
 
 const Container = styled.div`
     display: flex;
@@ -91,7 +92,41 @@ const Button = styled.button`
         color: #ededed;
         cursor: not-allowed;
     }
-`
+    &:active {
+        transform: scale(0.90);
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+`;
+
+const SkillBtn = styled(Button)`
+    width: 150px;
+    font-size: 15px;
+`;
+
+const SkillBtnWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin: 20px 20px;
+`;
+
+const SkillNameDiv = styled.div`
+    font-family: 'HakgyoansimDunggeunmisoTTF-B', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    width: 400px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #cccccc;
+    border-radius: 8px;
+    color: #007355;
+    padding: 10px;
+`;
 const NextBtn = styled(Button)`
     &.valid {
         background-color: #ebb9af;
@@ -99,9 +134,6 @@ const NextBtn = styled(Button)`
         &:hover {
             background-color: #efc4bb;
         }
-    }
-    &:active {
-        transform: scale(0.90);
     }
 `;
 
@@ -112,9 +144,6 @@ const PrevBtn = styled(Button)`
         &:hover {
             background-color: #aaaaaa;
         }
-    }
-    &:active {
-        transform: scale(0.90);
     }
 `;
 
@@ -129,15 +158,7 @@ const SwitchBtnWrapper = styled.div`
 const SwitchCharacterNextBtn = styled(Button)`
     height: inherit;
     width: inherit;
-
-    &:hover {
-        cursor: pointer;
-    }
-    &:active {
-        transform: scale(0.90);
-    }
-
-`
+`;
 
 const Lobby = () => {
     const [currentStep, setCurrentStep] = useState(STEPS.NICK_NAME);
@@ -183,19 +204,23 @@ const Lobby = () => {
             {currentStep === STEPS.JOB_POSITION && (
                 <Container>
                     <Title> 그리디에서 공유할 내 직군이에요.</Title>
-                    <Input autoFocus
-                           placeholder="개발 직군을 입력해주세요."
-                           value={tmpJobPosition ?? ""}
-                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                               setTmpJobPosition(e.currentTarget.value);
-                           }}
-                           onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                               if (!tmpJobPosition || !isValidText(tmpJobPosition)) return;
-                               if (e.key == "Enter") {
-                                   setCurrentStep((prev: number) => prev + 1);
-                               }
-                           }}
-                    />
+                    <SkillNameDiv>
+                        {tmpJobPosition ? "앱에서" : ""} {tmpJobPosition ? `${tmpNickname} [${tmpJobPosition}] 으로 표시돼요.`: ""}
+                    </SkillNameDiv>
+
+                    <SkillBtnWrapper>
+                        {Array.isArray(SKILLS) && SKILLS.map((skill: { name: string; acronym: string,key:number }) => (
+                            <SkillBtn
+                                key={skill.key}
+                                onClick={() => {
+                                    setTmpJobPosition(skill.acronym);
+                                }}
+                            >
+                                {skill.name}
+                            </SkillBtn>
+                        ))}
+                    </SkillBtnWrapper>
+
                     <NextBtn
                         disabled={!tmpJobPosition || !isValidText(tmpJobPosition)}
                         className={isValidText(tmpJobPosition ?? "") ? "valid" : "disabled"}
@@ -274,11 +299,6 @@ const Lobby = () => {
                             이전으로
                         </PrevBtn>
                     </CharacterCanvasContainer>
-                </>
-            )}
-
-            {currentStep === STEPS.FINISH && (
-                <>
                 </>
             )}
         </Container>
