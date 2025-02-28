@@ -4,7 +4,7 @@ import {useRecoilState, useSetRecoilState} from "recoil";
 import {CharacterSelectFinishedAtom, SelectedGLBIndexAtom} from "../../../store/PlayersAtom.ts";
 import {socket} from "../../../sockets/clientSocket.ts";
 import styled from "styled-components";
-import {isValidText} from "../../../utils/utils.ts";
+import {isValidNickname, isValidText} from "../../../utils/utils.ts";
 import {GlobalFontHakgyoansimDunggeunmiso, GlobalFontSubakYang} from "../../../utils/fontSetting.ts";
 import MainCanvas from "../canvas/MainCanvas.tsx";
 import {SKILLS} from "../../../data/constants.ts";
@@ -26,6 +26,15 @@ const Title = styled.div`
     font-size: 22px;
     font-weight: 800;
     color:#cccccc;
+    margin: 10px 10px;
+`;
+
+const SubTitle = styled.div`
+    font-family: 'HakgyoansimDunggeunmisoTTF-B', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color:#ffffff;
+    margin: 10px 10px;
 `;
 
 
@@ -177,6 +186,7 @@ const Lobby = () => {
             {currentStep === STEPS.NICK_NAME && (
                 <>
                     <Title>그리디에서 사용할 내 이름이에요.</Title>
+                    <SubTitle>별명은 5~12자의 영문 소문자, 숫자, 밑줄(_)로 구성해주세요.</SubTitle>
                     <Input autoFocus
                            placeholder="별명을 입력해주세요."
                            value={tmpNickname ?? ""}
@@ -185,14 +195,18 @@ const Lobby = () => {
                            }}
                            onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
                                if (!tmpNickname || !isValidText(tmpNickname)) return;
-                               if (e.key == "Enter") {
+                               if (e.key == "Enter" && isValidNickname(tmpNickname) && isValidNickname(tmpNickname)) {
                                    setCurrentStep(STEPS.JOB_POSITION);
                                }
                            }}
                     />
                     <NextBtn
-                        disabled={!tmpNickname || !isValidText(tmpNickname)}
-                        className={isValidText(tmpNickname ?? "") ? "valid" : "disabled"}
+                        disabled={!tmpNickname || !isValidText(tmpNickname) || !isValidNickname(tmpNickname)}
+                        className={
+                            !tmpNickname || !isValidText(tmpNickname) || !isValidNickname(tmpNickname)
+                                ? "disabled"
+                                : "valid"
+                        }
                         onClick={() => {
                             setCurrentStep((prev: number) => prev + 1);
                         }}>
