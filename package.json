@@ -27,7 +27,8 @@
     "recoil": "^0.7.7",
     "socket.io-client": "^4.8.0",
     "styled-components": "^6.1.13",
-    "three": "^0.169.0",
+    "three": "^0.172.0",
+    "three-mesh-bvh": "^0.8.3",
     "three-stdlib": "^2.33.0"
   },
   "devDependencies": {

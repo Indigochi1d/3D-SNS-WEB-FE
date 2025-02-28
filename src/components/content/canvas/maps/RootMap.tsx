@@ -38,6 +38,7 @@ export const RootMap = () => {
                                 <>
                                     {player.selectedGLBIndex === 0 && (
                                         <Man
+                                            key={player.id}
                                             player={player}
                                             position={
                                                 new Vector3(
@@ -51,6 +52,7 @@ export const RootMap = () => {
                                     )}
                                     {player.selectedGLBIndex === 1 && (
                                         <Kid
+                                            key={player.id}
                                             player={player}
                                             position={new Vector3(
                                                 player.position[0],
@@ -63,6 +65,7 @@ export const RootMap = () => {
                                     )}
                                     {player.selectedGLBIndex === 2 && (
                                         <Woman
+                                            key={player.id}
                                             player={player}
                                             position={new Vector3(
                                                 player.position[0],

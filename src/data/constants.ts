@@ -6,3 +6,21 @@ export const STEPS = {
     CHARACTER: 2,
     FINISH:3,
 }
+
+export const SKILLS = [
+    {
+      name: "FrontEnd",
+      acronym: "FE",
+      key: 1
+    },
+    {
+      name: "BackEnd",
+      acronym: "BE",
+      key: 2
+    },
+    {
+        name:"FullStack",
+        acronym:"FS",
+        key: 3
+    }
+  ];

@@ -4,10 +4,11 @@ import {useRecoilState, useSetRecoilState} from "recoil";
 import {CharacterSelectFinishedAtom, SelectedGLBIndexAtom} from "../../../store/PlayersAtom.ts";
 import {socket} from "../../../sockets/clientSocket.ts";
 import styled from "styled-components";
-import {isValidText} from "../../../utils/utils.ts";
+import {isValidNickname, isValidText} from "../../../utils/utils.ts";
 import {GlobalFontHakgyoansimDunggeunmiso, GlobalFontSubakYang} from "../../../utils/fontSetting.ts";
 import MainCanvas from "../canvas/MainCanvas.tsx";
-
+import {SKILLS} from "../../../data/constants.ts";
+ 
 
 const Container = styled.div`
     display: flex;
@@ -25,6 +26,15 @@ const Title = styled.div`
     font-size: 22px;
     font-weight: 800;
     color:#cccccc;
+    margin: 10px 10px;
+`;
+
+const SubTitle = styled.div`
+    font-family: 'HakgyoansimDunggeunmisoTTF-B', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color:#ffffff;
+    margin: 10px 10px;
 `;
 
 
@@ -91,7 +101,41 @@ const Button = styled.button`
         color: #ededed;
         cursor: not-allowed;
     }
-`
+    &:active {
+        transform: scale(0.90);
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+`;
+
+const SkillBtn = styled(Button)`
+    width: 150px;
+    font-size: 15px;
+`;
+
+const SkillBtnWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin: 20px 20px;
+`;
+
+const SkillNameDiv = styled.div`
+    font-family: 'HakgyoansimDunggeunmisoTTF-B', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    width: 400px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #cccccc;
+    border-radius: 8px;
+    color: #007355;
+    padding: 10px;
+`;
 const NextBtn = styled(Button)`
     &.valid {
         background-color: #ebb9af;
@@ -99,9 +143,6 @@ const NextBtn = styled(Button)`
         &:hover {
             background-color: #efc4bb;
         }
-    }
-    &:active {
-        transform: scale(0.90);
     }
 `;
 
@@ -112,9 +153,6 @@ const PrevBtn = styled(Button)`
         &:hover {
             background-color: #aaaaaa;
         }
-    }
-    &:active {
-        transform: scale(0.90);
     }
 `;
 
@@ -129,15 +167,7 @@ const SwitchBtnWrapper = styled.div`
 const SwitchCharacterNextBtn = styled(Button)`
     height: inherit;
     width: inherit;
-
-    &:hover {
-        cursor: pointer;
-    }
-    &:active {
-        transform: scale(0.90);
-    }
-
-`
+`;
 
 const Lobby = () => {
     const [currentStep, setCurrentStep] = useState(STEPS.NICK_NAME);
@@ -156,6 +186,7 @@ const Lobby = () => {
             {currentStep === STEPS.NICK_NAME && (
                 <>
                     <Title>그리디에서 사용할 내 이름이에요.</Title>
+                    <SubTitle>별명은 5~12자의 영문 소문자, 숫자, 밑줄(_)로 구성해주세요.</SubTitle>
                     <Input autoFocus
                            placeholder="별명을 입력해주세요."
                            value={tmpNickname ?? ""}
@@ -164,14 +195,18 @@ const Lobby = () => {
                            }}
                            onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
                                if (!tmpNickname || !isValidText(tmpNickname)) return;
-                               if (e.key == "Enter") {
+                               if (e.key == "Enter" && isValidNickname(tmpNickname) && isValidNickname(tmpNickname)) {
                                    setCurrentStep(STEPS.JOB_POSITION);
                                }
                            }}
                     />
                     <NextBtn
-                        disabled={!tmpNickname || !isValidText(tmpNickname)}
-                        className={isValidText(tmpNickname ?? "") ? "valid" : "disabled"}
+                        disabled={!tmpNickname || !isValidText(tmpNickname) || !isValidNickname(tmpNickname)}
+                        className={
+                            !tmpNickname || !isValidText(tmpNickname) || !isValidNickname(tmpNickname)
+                                ? "disabled"
+                                : "valid"
+                        }
                         onClick={() => {
                             setCurrentStep((prev: number) => prev + 1);
                         }}>
@@ -183,19 +218,23 @@ const Lobby = () => {
             {currentStep === STEPS.JOB_POSITION && (
                 <Container>
                     <Title> 그리디에서 공유할 내 직군이에요.</Title>
-                    <Input autoFocus
-                           placeholder="개발 직군을 입력해주세요."
-                           value={tmpJobPosition ?? ""}
-                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                               setTmpJobPosition(e.currentTarget.value);
-                           }}
-                           onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                               if (!tmpJobPosition || !isValidText(tmpJobPosition)) return;
-                               if (e.key == "Enter") {
-                                   setCurrentStep((prev: number) => prev + 1);
-                               }
-                           }}
-                    />
+                    <SkillNameDiv>
+                        {tmpJobPosition ? "앱에서" : ""} {tmpJobPosition ? `${tmpNickname} [${tmpJobPosition}] 으로 표시돼요.`: ""}
+                    </SkillNameDiv>
+
+                    <SkillBtnWrapper>
+                        {Array.isArray(SKILLS) && SKILLS.map((skill: { name: string; acronym: string,key:number }) => (
+                            <SkillBtn
+                                key={skill.key}
+                                onClick={() => {
+                                    setTmpJobPosition(skill.acronym);
+                                }}
+                            >
+                                {skill.name}
+                            </SkillBtn>
+                        ))}
+                    </SkillBtnWrapper>
+
                     <NextBtn
                         disabled={!tmpJobPosition || !isValidText(tmpJobPosition)}
                         className={isValidText(tmpJobPosition ?? "") ? "valid" : "disabled"}
@@ -274,11 +313,6 @@ const Lobby = () => {
                             이전으로
                         </PrevBtn>
                     </CharacterCanvasContainer>
-                </>
-            )}
-
-            {currentStep === STEPS.FINISH && (
-                <>
                 </>
             )}
         </Container>
