@@ -5,12 +5,13 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {CharacterSelectFinishedAtom, PlayersAtom} from "../../../../store/PlayersAtom.ts";
 import {CharacterInit} from "../../lobby/CharacterInit.tsx";
 import {useThree} from "@react-three/fiber";
-import {MutableRefObject, useEffect, useRef} from "react";
+import {MutableRefObject, Suspense, useEffect, useRef} from "react";
 import {OrbitControls as typeOC} from "three-stdlib";
 import {Vector3} from "three";
 import {Man} from "../maps/player/Man.tsx";
 import {Woman} from "../maps/player/Woman.tsx";
 import {Kid} from "../maps/player/Kid.tsx";
+import Loader from "../../loader/Loader.tsx";
 
 
 export const RootMap = () => {
@@ -27,7 +28,7 @@ export const RootMap = () => {
 
     
     return (
-        <>
+        <Suspense fallback={<Loader/>}>
             {!characterSelectFinished ?
                 <CharacterInit/> :
                 (
@@ -82,6 +83,6 @@ export const RootMap = () => {
                 )
 
             }
-        </>
+        </Suspense>
     )
 }
