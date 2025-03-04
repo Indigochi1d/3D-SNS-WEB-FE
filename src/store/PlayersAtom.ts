@@ -19,6 +19,7 @@ interface PlayerProps {
     selectedGLBIndex: number;
 }
 
+
 export const MeAtom = atom<meProps|undefined>({
     key: "MeAtom",
     default: undefined,
@@ -50,7 +51,7 @@ export const CurrentMapAtom = atom({
     default: "GROUND",
 });
 
-export const CurrentMyRoomAtom = atom({
+export const CurrentMyRoomAtom = atom<meProps|undefined>({
     key: "CurrentMyRoomAtom",
     default: undefined,
 });
