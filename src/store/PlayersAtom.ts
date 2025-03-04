@@ -40,4 +40,18 @@ export const PlayersAtom = atom<PlayerProps[]>({
 });
 
 
+export const IsLoadCompleteAtom = atom({
+    key: "IsLoadCompleteAtom",
+    default: false,
+});
+
+export const CurrentMapAtom = atom({
+    key: "CurrentMapAtom",
+    default: "GROUND",
+});
+
+export const CurrentMyRoomAtom = atom({
+    key: "CurrentMyRoomAtom",
+    default: undefined,
+});
 
