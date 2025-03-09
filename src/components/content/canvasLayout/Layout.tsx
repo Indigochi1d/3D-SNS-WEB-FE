@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 import { IsLoadCompleteAtom } from "../../../store/PlayersAtom";
 import styled from "styled-components";
 import SideBar from "./canvasUserInterfaces/common/SideBar";
+import Minimap from "./canvasUserInterfaces/ground/Minimap";
 
 interface CanvasLayoutProps {
     children: ReactNode;
@@ -20,7 +21,13 @@ const CanvasLayout = ({children} :CanvasLayoutProps) => {
     return (
         <Wrapper>
             {children}
-            {isLoadCompleted && <SideBar/>}
+            {isLoadCompleted &&
+            (
+                <>
+                    <SideBar/>
+                    <Minimap/>
+                </>
+            )}
         </Wrapper>
     );
 };

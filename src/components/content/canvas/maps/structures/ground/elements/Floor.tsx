@@ -14,6 +14,7 @@ const Floor = () => {
             castShadow
             receiveShadow
             rotation-x={-Math.PI / 2}
+            rotation-z={Math.PI / 2}
             position-y={-0.001}
             onPointerUp={(e)=>{
                 socket.emit("move",[e.point.x,0,e.point.z]);
