@@ -31,7 +31,7 @@ const PlayerPoint = styled.div`
         background-color: #dd1515;
     }
     &.other-point{
-        background-color: #04609e;
+        background-color: #424446;
     }
 `;
 
