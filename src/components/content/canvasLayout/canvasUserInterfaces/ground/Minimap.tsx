@@ -25,12 +25,13 @@ const PlayerPoint = styled.div`
     width: 10px;
     height: 10px;
     border-radius: 50%;
+    border: 1px solid #ffffff;
     z-index:999;
     &.me-point{
-        background-color: #59c771;
+        background-color: #dd1515;
     }
     &.other-point{
-        background-color: #3e3b5f;
+        background-color: #04609e;
     }
 `;
 
@@ -39,9 +40,6 @@ const Minimap = () => {
     const currentMap = useRecoilValue(CurrentMapAtom);
     const players = useRecoilValue(PlayersAtom);
     const me = useRecoilValue(MeAtom);
-
-    console.log("Minimap for Players", players);
-    console.log("Minimap for Me", me);
 
     return (
         <MinimapWrapper 

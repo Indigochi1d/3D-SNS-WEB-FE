@@ -6,6 +6,7 @@ import {useGraph,useFrame, RootState} from "@react-three/fiber";
 import {Vector3} from "three";
 import { useRecoilValue } from "recoil";
 import { MeAtom } from "../../../../../../store/PlayersAtom";
+import { calculateMinimapPosition } from "../../../../../../utils/utils";
 
 type ActionName =
     | 'CharacterArmature|CharacterArmature|CharacterArmature|Death'
@@ -55,6 +56,7 @@ interface ModelProps {
 export const usePlayer = ({ player, position,modelIndex }: ModelProps) => {
     const playerId = player?.id ?? ''; // player가 undefined일 수 있으므로 조건부 접근 사용
     const me = useRecoilValue(MeAtom);
+    const point = document.getElementById(`player-point-${playerId}`);
 
     const memoizedPosition = useMemo(() => position, []);
 
@@ -104,6 +106,11 @@ export const usePlayer = ({ player, position,modelIndex }: ModelProps) => {
             const direction = playerRef.current.position.clone().sub(position).normalize().multiplyScalar(0.04);
             playerRef.current.position.sub(direction);
             playerRef.current.lookAt(position);
+
+            if(point){
+                const {x,z} = calculateMinimapPosition(playerRef.current.position);
+                point.style.transform = `translate(${x}px,${z}px)`;
+            }
             setAnimation("CharacterArmature|CharacterArmature|CharacterArmature|Run");
         }
         else{
