@@ -5,17 +5,10 @@ import { ChatsAtom } from "../../../../../store/PlayersAtom";
 import { isValidText } from "../../../../../utils/utils";
 import { socket } from "../../../../../sockets/clientSocket";
 
-interface Chat {
-  senderNickname: string;
-  senderJobPosition: string;
-  text: string;
-}
-
 const ChatBox = () => {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [isChatContentOpen, setIsChatContentOpen] = useState<boolean>(false);
   const chats = useRecoilValue(ChatsAtom);
-  const [_chats, _setChats] = useState<Chat[]>([]);
   const [tmpText, setTmpText] = useState("");
 
   const submitMessage = useCallback(() => {
@@ -23,10 +16,6 @@ const ChatBox = () => {
 
     socket.emit("newText", tmpText);
     setTmpText("");
-    _setChats((prev) => [
-      ...prev,
-      { senderNickname: "나", senderJobPosition: "FE", text: tmpText },
-    ]);
     if (contentRef.current) {
       contentRef.current.scrollTop = contentRef.current.scrollHeight;
     }
@@ -50,7 +39,7 @@ const ChatBox = () => {
       <ChatDropdownWrapper>
         <ChatBoxTitle>Chatting</ChatBoxTitle>
         <ChatContentCotainer ref={contentRef}>
-          {_chats.map(
+          {chats?.map(
             ({ senderNickname, senderJobPosition, text }, index: number) => {
               return (
                 <ChatLine key={index}>
@@ -124,6 +113,7 @@ const ChatBoxTitle = styled.h4`
 `;
 
 const ChatContentCotainer = styled.div`
+  font-size: 13px;
   padding: 12px;
   width: 100%;
   height: 100%;
@@ -148,7 +138,7 @@ const ChatLine = styled.div`
 
 const ChatContent = styled.div`
   max-width: 250px;
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 700;
   text-shadow: #ececec;
   overflow-wrap: break-word;
@@ -172,7 +162,7 @@ const ChatInputContainer = styled.div`
 `;
 
 const ChatSender = styled.div`
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 700;
   text-shadow: 0.5px #ececec;
 `;

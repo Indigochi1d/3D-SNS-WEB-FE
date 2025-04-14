@@ -19,6 +19,14 @@ interface PlayerProps {
   selectedGLBIndex: number;
 }
 
+interface ChatsProps {
+  senderId?: number;
+  timeStamp?: Date;
+  senderNickname: string;
+  senderJobPosition: string;
+  text: string;
+}
+
 export enum MapTypeEnum {
   GROUND = "GROUND",
   MYROOM = "MYROOM",
@@ -60,7 +68,7 @@ export const CurrentMyRoomAtom = atom<meProps | undefined>({
   default: undefined,
 });
 
-export const ChatsAtom = atom({
+export const ChatsAtom = atom<ChatsProps[]>({
   key: "ChatsAtom",
   default: [],
 });
