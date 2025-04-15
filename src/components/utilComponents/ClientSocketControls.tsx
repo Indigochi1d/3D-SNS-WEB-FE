@@ -1,8 +1,15 @@
 import { ReactNode, useEffect } from "react";
 import { socket } from "../../sockets/clientSocket.ts";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { ChatsAtom, MeAtom, PlayersAtom } from "../../store/PlayersAtom.ts";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  ChatsAtom,
+  ShownChatMessagesAtom,
+  MeAtom,
+  PlayersAtom,
+  RecentChatsAtom,
+} from "../../store/PlayersAtom.ts";
 import { SocketStatusAtom } from "../../store/SocketAtom.ts";
+import { uniqBy } from "lodash";
 
 interface initializeProps {
   id: string;
@@ -35,7 +42,9 @@ export const ClientSocketControls = (): ReactNode => {
   const [me, setMe] = useRecoilState(MeAtom);
   const setPlayers = useSetRecoilState(PlayersAtom);
   const setSocketStatus = useSetRecoilState(SocketStatusAtom);
-  const setChats = useSetRecoilState(ChatsAtom);
+  const [chats, setChats] = useRecoilState(ChatsAtom);
+  const setRecentChats = useSetRecoilState(RecentChatsAtom);
+  const shownChatMessage = useRecoilValue(ShownChatMessagesAtom);
 
   const handleConnect = (): void => {
     console.log("ClientSocketControls Connected");
@@ -98,6 +107,24 @@ export const ClientSocketControls = (): ReactNode => {
         timeStamp,
       },
     ]);
+
+    const allChats = [
+      ...chats,
+      { senderId, senderNickname, senderJobPosition, text, timeStamp },
+    ];
+    const reversedChats = [...allChats].reverse();
+    const uniqueRecentChats = uniqBy(reversedChats, (chat) => chat.senderId);
+
+    setRecentChats(
+      uniqueRecentChats.filter(
+        (chat) =>
+          !shownChatMessage.some(
+            (shownChat) =>
+              shownChat.senderId === chat.senderId &&
+              shownChat.timeStamp === chat.timeStamp
+          )
+      )
+    );
   };
 
   useEffect(() => {
@@ -118,6 +145,6 @@ export const ClientSocketControls = (): ReactNode => {
       socket.off("players", handlePlayers);
       socket.off("newText", handleNewText);
     };
-  }, []);
+  }, [me, setMe, setPlayers, setChats, setRecentChats, shownChatMessage]);
   return <></>;
 };
