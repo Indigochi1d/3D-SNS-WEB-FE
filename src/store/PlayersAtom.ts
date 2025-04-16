@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-interface Ime {
+interface IMe {
   id: string;
   position: [number, number, number];
   nickname: string;
@@ -11,7 +11,7 @@ interface Ime {
   };
 }
 
-interface IPlayer {
+export interface IPlayer {
   id: string;
   position: [number, number, number];
   nickname: string;
@@ -19,8 +19,8 @@ interface IPlayer {
   selectedGLBIndex: number;
 }
 
-interface IChats {
-  senderId?: number;
+export interface IChats {
+  senderId: string;
   timeStamp?: Date;
   senderNickname: string;
   senderJobPosition: string;
@@ -33,7 +33,7 @@ export enum MapTypeEnum {
   GAMEROOM = "GAMEROOM",
 }
 
-export const MeAtom = atom<Ime | undefined>({
+export const MeAtom = atom<IMe | undefined>({
   key: "MeAtom",
   default: undefined,
 });
@@ -63,7 +63,7 @@ export const CurrentMapAtom = atom<MapTypeEnum>({
   default: MapTypeEnum.GROUND,
 });
 
-export const CurrentMyRoomAtom = atom<Ime | undefined>({
+export const CurrentMyRoomAtom = atom<IMe | undefined>({
   key: "CurrentMyRoomAtom",
   default: undefined,
 });
