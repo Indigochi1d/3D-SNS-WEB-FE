@@ -14,7 +14,7 @@ const ChatBox = () => {
   const [tmpText, setTmpText] = useState<string>("");
   const [isChatCollapsed, setIsChatCollapsed] = useState<boolean>(true);
 
-  const submitMessage = useCallback(() => {
+  const submitMessage = () => {
     if (!isValidText(tmpText)) return;
 
     socket.emit("newText", tmpText);
@@ -22,7 +22,7 @@ const ChatBox = () => {
     if (contentRef.current) {
       contentRef.current.scrollTop = contentRef.current.scrollHeight;
     }
-  }, [tmpText]);
+  };
 
   const handleSubmit = useCallback(() => {
     submitMessage();

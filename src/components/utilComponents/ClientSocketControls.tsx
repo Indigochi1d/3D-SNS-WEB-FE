@@ -7,6 +7,7 @@ import {
   MeAtom,
   PlayersAtom,
   RecentChatsAtom,
+  IChats,
 } from "../../store/PlayersAtom.ts";
 import { SocketStatusAtom } from "../../store/SocketAtom.ts";
 import { uniqBy } from "lodash";
@@ -31,7 +32,7 @@ interface PlayerProps {
 }
 
 interface newTextProps {
-  senderId: number;
+  senderId: string;
   senderNickname: string;
   senderJobPosition: string;
   text: string;
@@ -108,13 +109,12 @@ export const ClientSocketControls = (): ReactNode => {
       },
     ]);
 
-    const allChats = [
+    const allChats: IChats[] = [
       ...chats,
       { senderId, senderNickname, senderJobPosition, text, timeStamp },
     ];
     const reversedChats = [...allChats].reverse();
-    const uniqueRecentChats = uniqBy(reversedChats, (chat) => chat.senderId);
-
+    const uniqueRecentChats = uniqBy(reversedChats, "senderId");
     setRecentChats(
       uniqueRecentChats.filter(
         (chat) =>

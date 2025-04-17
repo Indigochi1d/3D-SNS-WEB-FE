@@ -4,10 +4,8 @@ import { GroundElements } from "./structures/ground";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   CharacterSelectFinishedAtom,
-  ChatsAtom,
   PlayersAtom,
   RecentChatsAtom,
-  ShownChatMessagesAtom,
 } from "../../../../store/PlayersAtom.ts";
 import { CharacterInit } from "../../lobby/CharacterInit.tsx";
 import { useThree } from "@react-three/fiber";
@@ -28,6 +26,7 @@ export const RootMap = () => {
   const nicknameRef = useRef(null);
   const recentChat = useRecoilValue(RecentChatsAtom);
 
+  console.log(recentChat);
   useEffect(() => {
     if (!controls.current) return;
     camera.position.set(14, 14, 14);
@@ -42,11 +41,6 @@ export const RootMap = () => {
         <>
           <GroundElements />
           {players.map((player) => {
-            // console.log("player id:", player.id);
-            // console.log("recent Chat:", recentChat);
-            // console.log("recentChat senderId:", recentChat[0]?.senderId);
-            // console.log(player.id === recentChat[0]?.senderId); // true -> 5s -> false
-
             const matchedChat = recentChat.find(
               (c) => c.senderId?.trim() === player.id.trim()
             );
