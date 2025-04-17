@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-interface meProps {
+interface IMe {
   id: string;
   position: [number, number, number];
   nickname: string;
@@ -11,7 +11,7 @@ interface meProps {
   };
 }
 
-interface PlayerProps {
+export interface IPlayer {
   id: string;
   position: [number, number, number];
   nickname: string;
@@ -19,8 +19,8 @@ interface PlayerProps {
   selectedGLBIndex: number;
 }
 
-interface ChatsProps {
-  senderId?: number;
+export interface IChats {
+  senderId: string;
   timeStamp?: Date;
   senderNickname: string;
   senderJobPosition: string;
@@ -33,7 +33,7 @@ export enum MapTypeEnum {
   GAMEROOM = "GAMEROOM",
 }
 
-export const MeAtom = atom<meProps | undefined>({
+export const MeAtom = atom<IMe | undefined>({
   key: "MeAtom",
   default: undefined,
 });
@@ -48,7 +48,7 @@ export const SelectedGLBIndexAtom = atom({
   default: 0,
 });
 
-export const PlayersAtom = atom<PlayerProps[]>({
+export const PlayersAtom = atom<IPlayer[]>({
   key: "PlayersAtom",
   default: [],
 });
@@ -63,12 +63,22 @@ export const CurrentMapAtom = atom<MapTypeEnum>({
   default: MapTypeEnum.GROUND,
 });
 
-export const CurrentMyRoomAtom = atom<meProps | undefined>({
+export const CurrentMyRoomAtom = atom<IMe | undefined>({
   key: "CurrentMyRoomAtom",
   default: undefined,
 });
 
-export const ChatsAtom = atom<ChatsProps[]>({
+export const ChatsAtom = atom<IChats[]>({
   key: "ChatsAtom",
+  default: [],
+});
+
+export const RecentChatsAtom = atom<IChats[]>({
+  key: "RecentChatsAtom",
+  default: [],
+});
+
+export const ShownChatMessagesAtom = atom<IChats[]>({
+  key: "ShownChatMessagesAtom",
   default: [],
 });
