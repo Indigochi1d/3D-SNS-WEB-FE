@@ -36,7 +36,7 @@ const ChatBox = () => {
     },
     [submitMessage]
   );
-
+  console.log(isChatContentOpen);
   return (
     <ChatBoxWrapper isChatCollapsed={isChatCollapsed}>
       <ChatBoxHeader>

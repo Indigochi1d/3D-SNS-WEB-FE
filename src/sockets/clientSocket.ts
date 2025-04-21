@@ -1,3 +1,7 @@
-import {io, Socket} from 'socket.io-client';
+import { io, Socket } from "socket.io-client";
 
-export const socket: Socket = io("http://localhost:4000");
+const socketServerURL: string = import.meta.env.VITE_SOCKET_SERVER;
+
+export const socket: Socket = io(socketServerURL, {
+  transports: ["websocket"],
+});
