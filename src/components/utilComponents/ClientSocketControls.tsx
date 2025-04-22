@@ -10,7 +10,6 @@ import {
   IChats,
 } from "../../store/PlayersAtom.ts";
 import { SocketStatusAtom } from "../../store/SocketAtom.ts";
-import { uniqBy } from "lodash";
 
 interface initializeProps {
   id: string;
@@ -36,14 +35,14 @@ interface newTextProps {
   senderNickname: string;
   senderJobPosition: string;
   text: string;
-  timeStamp: Date;
+  timeStamp: number;
 }
 
 export const ClientSocketControls = (): ReactNode => {
   const [me, setMe] = useRecoilState(MeAtom);
   const setPlayers = useSetRecoilState(PlayersAtom);
   const setSocketStatus = useSetRecoilState(SocketStatusAtom);
-  const [chats, setChats] = useRecoilState(ChatsAtom);
+  const setChats = useSetRecoilState(ChatsAtom);
   const setRecentChats = useSetRecoilState(RecentChatsAtom);
   const shownChatMessage = useRecoilValue(ShownChatMessagesAtom);
 
@@ -98,33 +97,30 @@ export const ClientSocketControls = (): ReactNode => {
     timeStamp,
   }: newTextProps) => {
     console.log("ClientSocketControls New Text");
-    setChats((prev) => [
-      ...prev,
-      {
-        senderId,
-        senderNickname,
-        senderJobPosition: senderJobPosition || "Unknown",
-        text,
-        timeStamp,
-      },
-    ]);
+    const newChat: IChats = {
+      senderId,
+      senderNickname,
+      senderJobPosition: senderJobPosition || "Unknown",
+      text,
+      timeStamp,
+    };
 
-    const allChats: IChats[] = [
-      ...chats,
-      { senderId, senderNickname, senderJobPosition, text, timeStamp },
-    ];
-    const reversedChats = [...allChats].reverse();
-    const uniqueRecentChats = uniqBy(reversedChats, "senderId");
-    setRecentChats(
-      uniqueRecentChats.filter(
+    setChats((prev) => [...prev, newChat]);
+
+    setRecentChats((prev) => {
+      // 이미 표시된 채팅은 제외
+      const filteredPrev = prev.filter(
         (chat) =>
           !shownChatMessage.some(
             (shownChat) =>
               shownChat.senderId === chat.senderId &&
               shownChat.timeStamp === chat.timeStamp
           )
-      )
-    );
+      );
+
+      // 새로운 채팅 추가
+      return [...filteredPrev, newChat];
+    });
   };
 
   useEffect(() => {
