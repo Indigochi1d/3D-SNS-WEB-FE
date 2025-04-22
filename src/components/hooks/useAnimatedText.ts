@@ -15,6 +15,11 @@ export const useAnimatedText = ({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
+    setCurrentIndex(0);
+    setDisplayText("");
+  }, [text]);
+
+  useEffect(() => {
     if (currentIndex < text.length) {
       const timeout = setTimeout(() => {
         setDisplayText(displayText + text[currentIndex]);
@@ -29,9 +34,5 @@ export const useAnimatedText = ({
     }
   }, [callbackFunc, currentIndex, displayText, once, text]);
 
-  useEffect(() => {
-    setCurrentIndex(0);
-    setDisplayText("");
-  }, []);
   return displayText;
 };
