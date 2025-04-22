@@ -20,6 +20,12 @@ function ChatBubble({ player, chat }: IChatBubble) {
   const me = useRecoilValue(MeAtom);
   const [visible, setVisible] = useState<boolean>(true);
 
+  useEffect(() => {
+    if (chat) {
+      setVisible(true);
+    }
+  }, [chat]);
+
   const registerShownChat = useCallback(() => {
     if (!chat) return;
     setShownChatMessage((prev) => [...prev, chat]);
@@ -42,13 +48,13 @@ function ChatBubble({ player, chat }: IChatBubble) {
         return prev.filter(
           (recentChat) =>
             recentChat.timeStamp !== chat?.timeStamp &&
-            recentChat.senderId != chat?.senderId
+            recentChat.senderId !== chat?.senderId
         );
       });
       setVisible(false);
     }, 5000);
     return () => clearTimeout(timeout);
-  }, [chat, setRecentChats, setShownChatMessage, visible, registerShownChat]);
+  }, [chat, setRecentChats]);
 
   if (!chat?.text || !visible) return null;
 
