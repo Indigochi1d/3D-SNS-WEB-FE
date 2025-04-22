@@ -21,7 +21,7 @@ export interface IPlayer {
 
 export interface IChats {
   senderId: string;
-  timeStamp?: Date;
+  timeStamp: number;
   senderNickname: string;
   senderJobPosition: string;
   text: string;
