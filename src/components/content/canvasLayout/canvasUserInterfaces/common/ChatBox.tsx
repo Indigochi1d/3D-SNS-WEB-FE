@@ -51,7 +51,7 @@ const ChatBox = () => {
       </ChatBoxHeader>
       {!isChatCollapsed && (
         <ChatDropdownWrapper>
-          <ChatContentCotainer ref={contentRef}>
+          <ChatContentContainer ref={contentRef}>
             {chats?.map(
               ({ senderNickname, senderJobPosition, text }, index: number) => {
                 return (
@@ -63,7 +63,7 @@ const ChatBox = () => {
                 );
               }
             )}
-          </ChatContentCotainer>
+          </ChatContentContainer>
         </ChatDropdownWrapper>
       )}
       <ChatInputContainer>
@@ -151,7 +151,7 @@ const ChatBoxTitle = styled.h4`
   }
 `;
 
-const ChatContentCotainer = styled.div`
+const ChatContentContainer = styled.div`
   padding-left: 10px;
   font-size: 13px;
   width: 100%;
