@@ -41,17 +41,20 @@ const ChatBox = () => {
     <ChatBoxWrapper isChatCollapsed={isChatCollapsed}>
       <ChatBoxHeader>
         <ChatBoxTitle>Chatting</ChatBoxTitle>
-        <ChatBoxCollapseBtn
-          onClick={() => {
-            setIsChatCollapsed((prev) => !prev);
-          }}
-        >
-          {isChatCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-        </ChatBoxCollapseBtn>
+        <HeaderRightContainer>
+          <CountedTextDiv>{tmpText.length}/200</CountedTextDiv>
+          <ChatBoxCollapseBtn
+            onClick={() => {
+              setIsChatCollapsed((prev) => !prev);
+            }}
+          >
+            {isChatCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+          </ChatBoxCollapseBtn>
+        </HeaderRightContainer>
       </ChatBoxHeader>
       {!isChatCollapsed && (
         <ChatDropdownWrapper>
-          <ChatContentCotainer ref={contentRef}>
+          <ChatContentContainer ref={contentRef}>
             {chats?.map(
               ({ senderNickname, senderJobPosition, text }, index: number) => {
                 return (
@@ -63,7 +66,7 @@ const ChatBox = () => {
                 );
               }
             )}
-          </ChatContentCotainer>
+          </ChatContentContainer>
         </ChatDropdownWrapper>
       )}
       <ChatInputContainer>
@@ -77,6 +80,7 @@ const ChatBox = () => {
           }}
           onKeyUp={handleSubmitEnter}
           placeholder="메시지 입력"
+          maxLength={200}
         />
         <button onClick={handleSubmit}>Send</button>
       </ChatInputContainer>
@@ -151,7 +155,7 @@ const ChatBoxTitle = styled.h4`
   }
 `;
 
-const ChatContentCotainer = styled.div`
+const ChatContentContainer = styled.div`
   padding-left: 10px;
   font-size: 13px;
   width: 100%;
@@ -212,6 +216,16 @@ const ChatInputBox = styled.input`
   outline: none;
   border: none;
   background-color: #d3d4d49f;
+`;
+
+const CountedTextDiv = styled.div`
+  padding-right: 5px;
+`;
+const HeaderRightContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default ChatBox;

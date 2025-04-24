@@ -69,7 +69,7 @@ function ChatBubble({ player, chat }: IChatBubble) {
       visible={visible}
     >
       <RoundedBox
-        args={[2.5, 1, 0.2]} // width, height, depth
+        args={[2.5, 1.3, 0.2]} // width, height, depth
         radius={0.1}
         smoothness={4}
       >
@@ -77,11 +77,13 @@ function ChatBubble({ player, chat }: IChatBubble) {
       </RoundedBox>
       <Text
         position={[0, 0, 0.15]} // 앞쪽으로 살짝 빼줌
-        fontSize={0.3}
+        fontSize={0.2}
         color={me?.id === player.id ? "#276b4f" : "#000000"}
         maxWidth={2.2}
         anchorX="center"
         anchorY="middle"
+        overflowWrap="break-word"
+        whiteSpace="normal"
       >
         {displayText}
       </Text>
