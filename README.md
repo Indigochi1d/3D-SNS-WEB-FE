@@ -1,7 +1,7 @@
 <div align="center">
-    <h1>🦜3D SNS Web</h1>
+    <h1>🦜Greedy PlayGround</h1>
     <p>Updated in 2025.05.02</p>
-    [http://www.greedyplayground.site/](http://www.greedyplayground.site/)
+    [Greedy Playground URL](http://www.greedyplayground.site/)
     <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=flat&logo=vite&logoColor=white" />
     <img src="https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB" />
     <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white" />
