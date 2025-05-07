@@ -62,6 +62,22 @@ export const ClientSocketControls = (): ReactNode => {
     });
   };
 
+  const handleReconnectAttempt = (attemptNumber: number): void => {
+    console.log(`Reconnection attempt ${attemptNumber}`);
+    setSocketStatus({
+      isConnected: false,
+      error: `재연결 시도 중... (${attemptNumber}/5)`,
+    });
+  };
+
+  const handleReconnectFailed = (): void => {
+    console.log("Reconnection failed");
+    setSocketStatus({
+      isConnected: false,
+      error: "서버 연결에 실패했습니다. 페이지를 새로고침해주세요.",
+    });
+  };
+
   const handleInitialize = (value: initializeProps): void => {
     console.log(value);
     setMe(value);
@@ -126,6 +142,8 @@ export const ClientSocketControls = (): ReactNode => {
   useEffect(() => {
     socket.on("connect", handleConnect);
     socket.on("disconnect", handleDisconnect);
+    socket.on("reconnect_attempt", handleReconnectAttempt);
+    socket.on("reconnect_failed", handleReconnectFailed);
     socket.on("initialize", handleInitialize);
     socket.on("enter", handleEnter);
     socket.on("exit", handleExit);
@@ -135,6 +153,8 @@ export const ClientSocketControls = (): ReactNode => {
     return () => {
       socket.off("connect", handleConnect);
       socket.off("disconnect", handleDisconnect);
+      socket.off("reconnect_attempt", handleReconnectAttempt);
+      socket.off("reconnect_failed", handleReconnectFailed);
       socket.off("initialize", handleInitialize);
       socket.off("enter", handleEnter);
       socket.off("exit", handleExit);
@@ -142,5 +162,6 @@ export const ClientSocketControls = (): ReactNode => {
       socket.off("newText", handleNewText);
     };
   }, [me, setMe, setPlayers, setChats, setRecentChats, shownChatMessage]);
+
   return <></>;
 };
