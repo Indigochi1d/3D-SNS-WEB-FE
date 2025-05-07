@@ -55,7 +55,7 @@ interface ModelProps {
 }
 
 export const usePlayer = ({ player, position, modelIndex }: ModelProps) => {
-  const playerId = player?.id ?? ""; // player가 undefined일 수 있으므로 조건부 접근 사용
+  const playerId = player?.id ?? "";
   const me = useRecoilValue(MeAtom);
   const point = document.getElementById(`player-point-${playerId}`);
 
@@ -141,7 +141,7 @@ export const usePlayer = ({ player, position, modelIndex }: ModelProps) => {
       );
       chatBubbleBoard.lookAt(10000, 10000, 10000);
     }
-    if (me?.id === player.id && camera) {
+    if (me?.id === playerId && camera && playerRef.current) {
       camera.position.set(
         playerRef.current.position.x + 12,
         playerRef.current.position.y + 12,
