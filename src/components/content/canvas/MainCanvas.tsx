@@ -4,13 +4,35 @@ import { RootMap } from "./maps/RootMap.tsx";
 import { useRecoilValue } from "recoil";
 import { SocketStatusAtom } from "../../../store/SocketAtom";
 import Lobby from "../lobby/Lobby";
+import styled from "styled-components";
+
+const ReconnectMessage = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 1000;
+`;
 
 const MainCanvas = () => {
   const aspectRatio: number = window.innerWidth / window.innerHeight;
   const socketStatus = useRecoilValue(SocketStatusAtom);
 
   if (!socketStatus.isConnected) {
-    return <Lobby />;
+    return (
+      <>
+        <Lobby />
+        <ReconnectMessage>
+          <h2>연결이 끊어졌습니다</h2>
+          <p>페이지를 새로고침하여 재접속해주세요.</p>
+        </ReconnectMessage>
+      </>
+    );
   }
 
   return (
@@ -39,8 +61,7 @@ const MainCanvas = () => {
         shadow-camera-near={0.1}
         shadow-camera-far={200}
       />
-      <OrbitControls />
-
+      <OrbitControls enabled={socketStatus.isConnected} />
       <RootMap />
     </Canvas>
   );
