@@ -54,10 +54,12 @@ const MainCanvas = () => {
         intensity={5}
         position={[0, 50, -50]}
         shadow-normalBias={0.1}
-        shadow-camera-left={-25}
-        shadow-camera-right={25}
-        shadow-camera-top={25}
-        shadow-camera-bottom={-25}
+        shadow-bias={-0.001}
+        shadow-mapSize={[2048, 2048]}
+        shadow-camera-left={-100}
+        shadow-camera-right={100}
+        shadow-camera-top={100}
+        shadow-camera-bottom={-100}
         shadow-camera-near={0.1}
         shadow-camera-far={200}
       />
