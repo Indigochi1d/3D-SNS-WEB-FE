@@ -8,6 +8,7 @@ import {
   PlayersAtom,
   RecentChatsAtom,
   IChats,
+  CharacterSelectFinishedAtom,
 } from "../../store/PlayersAtom.ts";
 import { SocketStatusAtom } from "../../store/SocketAtom.ts";
 
@@ -44,6 +45,9 @@ export const ClientSocketControls = (): ReactNode => {
   const setSocketStatus = useSetRecoilState(SocketStatusAtom);
   const setChats = useSetRecoilState(ChatsAtom);
   const setRecentChats = useSetRecoilState(RecentChatsAtom);
+  const setCharacterSelectFinished = useSetRecoilState(
+    CharacterSelectFinishedAtom
+  );
   const shownChatMessage = useRecoilValue(ShownChatMessagesAtom);
 
   const handleConnect = (): void => {
@@ -52,6 +56,16 @@ export const ClientSocketControls = (): ReactNode => {
       isConnected: true,
       error: null,
     });
+
+    // 재연결 시 서버에 현재 상태 전송
+    if (me) {
+      socket.emit("initialize", {
+        tmpNickname: me.nickname,
+        tmpJobPosition: me.jobPosition,
+        selectedGLBIndex: me.selectedGLBIndex,
+        myRoom: { object: [] },
+      });
+    }
   };
 
   const handleDisconnect = (): void => {
@@ -60,6 +74,13 @@ export const ClientSocketControls = (): ReactNode => {
       isConnected: false,
       error: "Socket Disconnected",
     });
+
+    // 연결이 끊어지면 클라이언트 상태 초기화
+    setPlayers([]);
+    setMe(undefined);
+    setChats([]);
+    setRecentChats([]);
+    setCharacterSelectFinished(false);
   };
 
   const handleReconnectAttempt = (attemptNumber: number): void => {
