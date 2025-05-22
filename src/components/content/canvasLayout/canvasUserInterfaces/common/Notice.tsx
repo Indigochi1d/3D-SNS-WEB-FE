@@ -6,6 +6,11 @@ import {
   EnteredNoticeAtom,
 } from "../../../../../store/PlayersAtom";
 
+interface NoticeItem {
+  id: number;
+  message: string;
+}
+
 const NoticeWrapper = styled.div`
   position: fixed;
   top: 0;
@@ -19,9 +24,12 @@ const NoticeWrapper = styled.div`
   }
   &.visible {
     display: flex;
+    opacity: 1;
+    visibility: visible;
   }
   &.invisible {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
   }
   div {
     margin-top: 40px;
@@ -37,34 +45,65 @@ const Notice = () => {
   const [enteredPlayer, setEnteredPlayer] = useRecoilState(EnteredNoticeAtom);
   const [exitedPlayer, setExitedPlayer] = useRecoilState(ExitedNoticeAtom);
   const [visible, setVisible] = useState<boolean>(false);
+  const [noticeQueue, setNoticeQueue] = useState<NoticeItem[]>([]);
+  const [currentNotice, setCurrentNotice] = useState<NoticeItem | null>(null);
+  const [noticeId, setNoticeId] = useState(0);
+
+  // 새로운 알림을 큐에 추가
+  const addToQueue = (message: string) => {
+    const newNotice = {
+      id: noticeId,
+      message,
+    };
+    setNoticeQueue((prev) => [...prev, newNotice]);
+    setNoticeId((prev) => prev + 1);
+  };
+
+  // 큐에서 다음 알림 처리
   useEffect(() => {
-    setVisible(true);
-    const timeout = setTimeout(() => {
-      setVisible(false);
+    if (noticeQueue.length > 0 && !currentNotice) {
+      setCurrentNotice(noticeQueue[0]);
+      setVisible(true);
+      setNoticeQueue((prev) => prev.slice(1));
+    }
+  }, [noticeQueue, currentNotice]);
+
+  // 현재 알림 표시 후 제거
+  useEffect(() => {
+    if (currentNotice) {
+      const timeout = setTimeout(() => {
+        setVisible(false);
+        setTimeout(() => {
+          setCurrentNotice(null);
+        }, 400); // fade out 애니메이션 완료 후 제거
+      }, 3000);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentNotice]);
+
+  // 입장 알림 처리
+  useEffect(() => {
+    if (enteredPlayer) {
+      addToQueue(
+        `${enteredPlayer.nickname}[${enteredPlayer.jobPosition}]님이 입장하셨습니다.`
+      );
       setEnteredPlayer(undefined);
-    }, 3000);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [enteredPlayer, setEnteredPlayer, setVisible]);
+    }
+  }, [enteredPlayer, setEnteredPlayer]);
+
+  // 퇴장 알림 처리
   useEffect(() => {
-    setVisible(true);
-    const timeout = setTimeout(() => {
-      setVisible(false);
+    if (exitedPlayer) {
+      addToQueue(
+        `${exitedPlayer.nickname}[${exitedPlayer.jobPosition}]님이 퇴장하셨습니다.`
+      );
       setExitedPlayer(undefined);
-    }, 3000);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [exitedPlayer, setExitedPlayer, setVisible]);
+    }
+  }, [exitedPlayer, setExitedPlayer]);
+
   return (
     <NoticeWrapper className={visible ? "visible" : "invisible"}>
-      {enteredPlayer && (
-        <div>{`${enteredPlayer.nickname}[${enteredPlayer.jobPosition}]님이 입장하셨습니다.`}</div>
-      )}
-      {exitedPlayer && (
-        <div>{`${exitedPlayer.nickname}[${exitedPlayer.jobPosition}]님이 퇴장하셨습니다.`}</div>
-      )}
+      {currentNotice && <div>{currentNotice.message}</div>}
     </NoticeWrapper>
   );
 };
