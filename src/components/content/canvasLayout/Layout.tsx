@@ -6,6 +6,7 @@ import SideBar from "./canvasUserInterfaces/common/SideBar";
 import Minimap from "./canvasUserInterfaces/ground/Minimap";
 import ChatBox from "./canvasUserInterfaces/common/ChatBox";
 import { MapTypeEnum } from "../../../store/PlayersAtom";
+import Notice from "./canvasUserInterfaces/common/Notice";
 
 interface CanvasLayoutProps {
   children: ReactNode;
@@ -26,6 +27,7 @@ const CanvasLayout = ({ children }: CanvasLayoutProps) => {
       {children}
       {isLoadCompleted && (
         <>
+          <Notice />
           <SideBar />
           <Minimap />
           {currentMap !== MapTypeEnum.GAMEROOM && <ChatBox />}

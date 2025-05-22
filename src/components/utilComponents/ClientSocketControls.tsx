@@ -9,8 +9,11 @@ import {
   RecentChatsAtom,
   IChats,
   CharacterSelectFinishedAtom,
+  EnteredNoticeAtom,
+  ExitedNoticeAtom,
 } from "../../store/PlayersAtom.ts";
 import { SocketStatusAtom } from "../../store/SocketAtom.ts";
+import { IPlayer } from "../../store/PlayersAtom.ts";
 
 interface initializeProps {
   id: string;
@@ -48,6 +51,8 @@ export const ClientSocketControls = (): ReactNode => {
   const setCharacterSelectFinished = useSetRecoilState(
     CharacterSelectFinishedAtom
   );
+  const setEnteredNotice = useSetRecoilState(EnteredNoticeAtom);
+  const setExitedNotice = useSetRecoilState(ExitedNoticeAtom);
   const shownChatMessage = useRecoilValue(ShownChatMessagesAtom);
 
   const handleConnect = (): void => {
@@ -105,12 +110,14 @@ export const ClientSocketControls = (): ReactNode => {
     console.log("ClientSocketControls Initialized");
   };
 
-  const handleEnter = (): void => {
+  const handleEnter = (value: IPlayer): void => {
     console.log("ClientSocketControls Enter");
+    setEnteredNotice(value);
   };
 
-  const handleExit = (): void => {
+  const handleExit = (value: IPlayer): void => {
     console.log("ClientSocketControls Exit");
+    setExitedNotice(value);
   };
 
   const handlePlayers = (value: PlayerProps[]): void => {

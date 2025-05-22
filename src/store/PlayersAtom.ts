@@ -82,3 +82,13 @@ export const ShownChatMessagesAtom = atom<IChats[]>({
   key: "ShownChatMessagesAtom",
   default: [],
 });
+
+export const EnteredNoticeAtom = atom<IPlayer | undefined>({
+  key: "EnteredPlayersAtom",
+  default: undefined,
+});
+
+export const ExitedNoticeAtom = atom<IPlayer | undefined>({
+  key: "ExitedPlayersAtom",
+  default: undefined,
+});
