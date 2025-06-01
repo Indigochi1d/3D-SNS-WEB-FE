@@ -1,6 +1,6 @@
 <div align="center">
     <h1>🦜Greedy PlayGround</h1>
-    <p>Updated in 2025.05.16</p>
+    <p>Updated in 2025.06.01</p>
     <p>
          <a href="http://www.greedyplayground.site/">🌳Greedy PlayGround</a>
     </p>
